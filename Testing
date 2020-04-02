@@ -1,0 +1,4 @@
+%dette er en test
+
+i = 1+2
+print(i)
