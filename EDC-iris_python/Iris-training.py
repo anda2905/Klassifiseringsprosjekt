@@ -1,5 +1,11 @@
-class_1 = np.loadtxt("class_1", float)
-class_2 = np.loadtxt("class_2", float)
-class_3 = np.loadtxt("class_3",float)
+import numpy as np
+
+class_1 = np.loadtxt("class_1", float, delimiter=',')
+#class_2 = np.loadtxt("class_2")
+#class_3 = np.loadtxt("class_3")
+
+class_1_train = class_1[:30,:]  #[nedover, bortover], de første 30
+class_1_test = class_1[-20:,:] #[nedover, bortover], de 20 siste
 
 
+print(class_1_test)
