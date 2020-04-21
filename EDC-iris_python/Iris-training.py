@@ -3,8 +3,8 @@ import numpy as np
 #x_k input data, data fra klassematrise
 #t_k targets, class labels... hmm
 class_1 = np.loadtxt("class_1", float, delimiter=',') #Iris-setosa
-#class_2 = np.loadtxt("class_2") #Iris-versicolor
-#class_3 = np.loadtxt("class_3") #Iris-virginica
+class_2 = np.loadtxt("class_2") #Iris-versicolor
+class_3 = np.loadtxt("class_3") #Iris-virginica
 
 N = 30
 alpha = 0.1 #step factor
