@@ -2,9 +2,9 @@ import numpy as np
 import matplotlib.pyplot as plt
 import time
 
-x1all = np.loadtxt('class_1', delimiter=',');
-x2all = np.loadtxt('class_2', delimiter=',');
-x3all = np.loadtxt('class_3', delimiter=',');
+x1all = np.loadtxt('class_1', delimiter=',')
+x2all = np.loadtxt('class_2', delimiter=',')
+x3all = np.loadtxt('class_3', delimiter=',')
 
 # attributes to classify by
 attributes = np.array([
@@ -20,10 +20,10 @@ x3 = x3all[:, attributes]
 
 Ntot, dimx = x1.shape
 # choose amount of samples used for traing, rest is used for testing
-Ndtot = 30;
-Nttot = Ntot - Ndtot;
+Ndtot = 30
+Nttot = Ntot - Ndtot
 
-x1d = x1[:Ndtot];
+x1d = x1[:Ndtot]
 x1t = x1[Ndtot:]
 x2d = x2[:Ndtot];
 x2t = x2[Ndtot:]
@@ -142,10 +142,16 @@ print('test confusion:\n', conf)
 predicted_0 = x_test[:, predictions == 0].T
 predicted_1 = x_test[:, predictions == 1].T
 predicted_2 = x_test[:, predictions == 2].T
+print("Predicted: ")
+print(predictions)
+
 
 solution_0 = x_test[:, answers == 0].T
 solution_1 = x_test[:, answers == 1].T
 solution_2 = x_test[:, answers == 2].T
+
+print("solution: ")
+print(answers)
 
 wrong_class = x_test[:, predictions != answers].T
 
