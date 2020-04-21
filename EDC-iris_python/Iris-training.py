@@ -14,8 +14,8 @@ class_1_test = class_1[-20:,:] #[nedover, bortover], de 20 siste
 
 #De forskjellige blomstenes karakteristikker
 attributes = np.array([
-	False, #petal length
-	False, #petal width
+	True, #petal length
+	True, #petal width
 	True, #sepal length
 	True, #sepal width
 ])

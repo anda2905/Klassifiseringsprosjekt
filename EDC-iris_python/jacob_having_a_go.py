@@ -57,21 +57,21 @@ y_test = np.concatenate((
 W = np.random.rand(y_train.shape[0], dimx + 1)  # W=classifying matrix, random initial values
 
 
-def sigmoid(x):
+def sigmoid(x): #eq 20
     return 1 / (1 + np.exp(-x))
 
 
-def predict(W, x):
+def predict(W, x): #gir oss gk
     # predictions
     return sigmoid(np.matmul(W, x))
 
 
-def MSE(guess, answer):
+def MSE(guess, answer): #formel 19
     # square error
     return 1 / 2 * np.sum(np.linalg.norm(guess - answer, axis=0) ** 2)
 
 
-def gradient(g, x, y):
+def gradient(g, x, y): #eq 22
     # gardient for W that maximizes MSE (-dW minimizes)
     return np.matmul((g - y) * g * (1 - g), x.T)
 
