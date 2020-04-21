@@ -12,10 +12,15 @@ alpha = 0.1 #step factor
 class_1_train = class_1[:30,:]  #[nedover, bortover], de første 30
 class_1_test = class_1[-20:,:] #[nedover, bortover], de 20 siste
 
-for k in range(N):
+#De forskjellige blomstenes karakteristikker
+attributes = np.array([
+	False, #petal length
+	False, #petal width
+	True, #sepal length
+	True, #sepal width
+])
 
-
-#if (class_1_test[0,:] == class_1_test[0,:]).all():
+#if (class_1_test[0,:] == class_1_test[0,:]).all(): sjekker at siste i test og første i train ikke er like, .all gjør at man kan sjekke likhet for arrays
 
 print(class_1_train)
 print(class_1_test)
