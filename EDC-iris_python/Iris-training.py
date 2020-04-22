@@ -192,22 +192,71 @@ class_3_PWidth = class_3_all[:,1]
 class_3_SLength = class_3_all[:,2]
 class_3_SWidth = class_3_all[:,3]
 
+max_Plength_all = [np.amax(class_1_PLength),np.amax(class_2_PLength),np.amax(class_3_PLength)]
+max_Plength = np.amax(max_Plength_all)
+print ("Petal length maximums: " ,max_Plength)
 
-plt.subplot(3,4,1).hist(class_1_PLength,10)
-plt.subplot(3,4,5).hist(class_2_PLength,10)
-plt.subplot(3,4,9).hist(class_3_PLength,10)
+min_Plength_all = [np.amin(class_1_PLength),np.amin(class_2_PLength),np.amin(class_3_PLength)]
+min_Plength = np.amin(min_Plength_all)
+print ("Petal length mim: " ,min_Plength)
 
-plt.subplot(3,4,2).hist(class_1_PWidth,10)
-plt.subplot(3,4,6).hist(class_2_PWidth,10)
-plt.subplot(3,4,10).hist(class_3_PWidth,10)
+max_PWidth_all = [np.amax(class_1_PWidth),np.amax(class_2_PWidth),np.amax(class_3_PWidth)]
+max_PWidth = np.amax(max_PWidth_all)
 
-plt.subplot(3,4,3).hist(class_1_SLength,10)
-plt.subplot(3,4,7).hist(class_2_SLength,10)
-plt.subplot(3,4,11).hist(class_3_SLength,10)
 
-plt.subplot(3,4,4).hist(class_1_SWidth,10)
-plt.subplot(3,4,8).hist(class_2_SWidth,10)
-plt.subplot(3,4,12).hist(class_3_SWidth,10)
+min_PWidth_all = [np.amin(class_1_PWidth),np.amin(class_2_PWidth),np.amin(class_3_PWidth)]
+min_PWidth = np.amin(min_PWidth_all)
+
+max_Slength_all = [np.amax(class_1_SLength),np.amax(class_2_SLength),np.amax(class_3_SLength)]
+max_Slength = np.amax(max_Slength_all)
+
+
+min_Slength_all = [np.amin(class_1_SLength),np.amin(class_2_SLength),np.amin(class_3_SLength)]
+min_Slength = np.amin(min_Slength_all)
+
+
+max_SWidth_all = [np.amax(class_1_SWidth),np.amax(class_2_SWidth),np.amax(class_3_SWidth)]
+max_SWidth = np.amax(max_SWidth_all)
+
+
+min_SWidth_all = [np.amin(class_1_SWidth),np.amin(class_2_SWidth),np.amin(class_3_SWidth)]
+min_SWidth = np.amin(min_SWidth_all)
+
+
+
+
+
+
+
+plt.subplot(3,4,1).hist(class_1_PLength,10,range=(min_Plength,max_Plength))
+plt.xlabel("Petal length class 1")
+plt.subplot(3,4,5).hist(class_2_PLength,10,range=(min_Plength,max_Plength))
+plt.xlabel("Petal length class 2")
+plt.subplot(3,4,9).hist(class_3_PLength,10,range=(min_Plength,max_Plength))
+plt.xlabel("Petal length class 3")
+
+plt.subplot(3,4,2).hist(class_1_PWidth,10,range=(min_PWidth,max_PWidth))
+plt.xlabel("Petal width class 1")
+plt.subplot(3,4,6).hist(class_2_PWidth,10,range=(min_PWidth,max_PWidth))
+plt.xlabel("Petal width class 2")
+plt.subplot(3,4,10).hist(class_3_PWidth,10,range=(min_PWidth,max_PWidth))
+plt.xlabel("Petal width class 3")
+
+plt.subplot(3,4,3).hist(class_1_SLength,10,range=(min_Slength,max_Slength))
+plt.xlabel("Sepal length class 1")
+plt.subplot(3,4,7).hist(class_2_SLength,10,range=(min_Slength,max_Slength))
+plt.xlabel("Sepal length class 2")
+plt.subplot(3,4,11).hist(class_3_SLength,10,range=(min_Slength,max_Slength))
+plt.xlabel("Sepal length class 3")
+
+plt.subplot(3,4,4).hist(class_1_SWidth,10,range=(min_SWidth,max_SWidth))
+plt.xlabel("Sepal width class 1")
+plt.subplot(3,4,8).hist(class_2_SWidth,10,range=(min_SWidth,max_SWidth))
+plt.xlabel("Sepal width class 2")
+plt.subplot(3,4,12).hist(class_3_SWidth,10,range=(min_SWidth,max_SWidth))
+plt.xlabel("Sepal width class 3")
+
+
 
 
 plt.show()
