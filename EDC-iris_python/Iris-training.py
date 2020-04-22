@@ -75,12 +75,19 @@ class_1 = class_1_all[:, attributes]
 class_2 = class_2_all[:, attributes]
 class_3 = class_3_all[:, attributes]
 
-class_1_train = class_1[:N_train, :]  # [nedover, bortover], de første 30
-class_1_test = class_1[-N_test:, :]  # [nedover, bortover], de 20 siste
-class_2_train = class_2[:N_train, :]  # [nedover, bortover], de første 30
-class_2_test = class_2[-N_test:, :]  # [nedover, bortover], de 20 siste
-class_3_train = class_3[:N_train, :]  # [nedover, bortover], de første 30
-class_3_test = class_3[-N_test:, :]  # [nedover, bortover], de 20 siste
+#class_1_train = class_1[:N_train, :]  # [nedover, bortover], de første 30
+#class_1_test = class_1[-N_test:, :]  # [nedover, bortover], de 20 siste
+#class_2_train = class_2[:N_train, :]  # [nedover, bortover], de første 30
+#class_2_test = class_2[-N_test:, :]  # [nedover, bortover], de 20 siste
+#class_3_train = class_3[:N_train, :]  # [nedover, bortover], de første 30
+#class_3_test = class_3[-N_test:, :]  # [nedover, bortover], de 20 siste
+
+class_1_train = class_1[-N_train:, :]  # [nedover, bortover], de siste 30
+class_1_test = class_1[:N_test, :]  # [nedover, bortover], de først 20
+class_2_train = class_2[-N_train:, :]  # [nedover, bortover], de siste 30
+class_2_test = class_2[:N_test, :]  # [nedover, bortover], de 20 først
+class_3_train = class_3[-N_train:, :]  # [nedover, bortover], de siste 30
+class_3_test = class_3[:N_test, :]  # [nedover, bortover], de 20 første
 
 train_set = np.concatenate(
     (class_1_train, class_2_train, class_3_train))  # Joining all training data into a single vector
