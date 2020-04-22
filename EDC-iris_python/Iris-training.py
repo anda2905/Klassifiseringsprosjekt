@@ -204,20 +204,32 @@ ns.append(np.min(np.concatenate((class_1_SLength, class_2_SLength, class_3_SLeng
 ns.append(np.min(np.concatenate((class_1_SWidth , class_2_SWidth, class_3_SWidth))))
 
 plt.subplot(3,4,1).hist(class_1_PLength,10, range=(ns[0]-0.1,ms[0]+0.1))
+plt.xlabel("Petal length class 1")
 plt.subplot(3,4,5).hist(class_2_PLength,10, range=(ns[0]-0.1,ms[0]+0.1))
+plt.xlabel("Petal length class 2")
 plt.subplot(3,4,9).hist(class_3_PLength,10, range=(ns[0]-0.1,ms[0]+0.1))
+plt.xlabel("Petal length class 3")
 
 plt.subplot(3,4,2).hist(class_1_PWidth,10, range=(ns[3]-0.1,ms[1]+0.1))
+plt.xlabel("Petal width class 1")
 plt.subplot(3,4,6).hist(class_2_PWidth,10, range=(ns[3]-0.1,ms[1]+0.1))
+plt.xlabel("Petal width class 1")
 plt.subplot(3,4,10).hist(class_3_PWidth,10, range=(ns[3]-0.1,ms[1]+0.1))
+plt.xlabel("Petal width class 3")
 
 plt.subplot(3,4,3).hist(class_1_SLength,10, range=(ns[2]-0.1,ms[2]+0.1))
+plt.xlabel("Sepal length class 1")
 plt.subplot(3,4,7).hist(class_2_SLength,10, range=(ns[2]-0.1,ms[2]+0.1))
+plt.xlabel("Sepal length class 2")
 plt.subplot(3,4,11).hist(class_3_SLength,10, range=(ns[2]-0.1,ms[2]+0.1))
+plt.xlabel("Sepal length class 3")
 
 plt.subplot(3,4,4).hist(class_1_SWidth,10, range=(ns[3]-0.1,ms[3]+0.1))
+plt.xlabel("Sepal width class 1")
 plt.subplot(3,4,8).hist(class_2_SWidth,10, range=(ns[3]-0.1,ms[3]+0.1))
+plt.xlabel("Sepal width class 2")
 plt.subplot(3,4,12).hist(class_3_SWidth,10, range=(ns[3]-0.1,ms[3]+0.1))
+plt.xlabel("Sepal width class 3")
 
 plt.tight_layout()
 plt.show()
