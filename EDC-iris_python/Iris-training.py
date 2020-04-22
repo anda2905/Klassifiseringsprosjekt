@@ -13,7 +13,7 @@ N_all = 50
 N_test = N_all-N_train
 N_columns = 4
 #Burde kanskje ha en for løkke på alpha slik at den tunes helt til all test dataen er riktig?
-alpha = 0.1 #step factor
+alpha = 0.01 #step factor
 
 # Correct answers for the training data
 t_k_train = np.concatenate((
@@ -24,6 +24,7 @@ t_k_train = np.concatenate((
     axis=1
 )
 
+# Correct answers for the test data
 t_k_test = np.concatenate((
     np.repeat(np.array([[1], [0], [0]]), N_test, axis=1),
     np.repeat(np.array([[0], [1], [0]]), N_test, axis=1),
@@ -75,19 +76,66 @@ train_set = np.concatenate((train_set, np.ones((train_set.shape[0], 1))), axis=1
 test_set = np.concatenate((class_1_test, class_2_test, class_3_test))  # Joining all test data into a single vector
 test_set = np.concatenate((test_set, np.ones((test_set.shape[0], 1))), axis=1).T  # Adding bias coordinate
 
-print("Train set: ")
-print(train_set)
-print("    ")
+#print("Train set: ")
+#print(train_set)
+#print("    ")
 
-print("Test set: ")
-print(test_set)
-print("    ")
+#print("Test set: ")
+#print(test_set)
+#print("    ")
 
-print("Correct answers for train data: ")
-print(t_k_train)
-print("")
 
-print("Correct answers for test data: ")
-print(t_k_test)
-print("")
+#print("Correct answers for train data: ")
+#print(t_k_train)
+#print("")
 
+#print("Correct answers for test data: ")
+#print(t_k_test)
+#print("")
+
+# training
+
+maxiterations = 100000
+MSE_treshold = 0.1 * test_set.shape[0]  # if data is perfectly classified MSE reaches 0. Unlikely that this treshold is met
+dW_treshold = 0.02  # if dW is small it implies we are close to a local minimum (which is hopefully a global minimum)
+
+
+# gradient descent
+iterations = 0
+while iterations < maxiterations:
+    g_k = predict(W, train_set)
+    error = MSE(g_k, t_k_train)
+    dW = gradient(g_k, train_set, t_k_train)
+
+    if error < MSE_treshold or np.linalg.norm(dW) < dW_treshold:
+        print('<---- succes ---->')
+        print('{0:^12}: {1:>5}'.format('iterations', iterations))
+        #print('{0:^12}: {1:>5} ms'.format('time', int(1000 * (time.time() - starttime))))
+        print('{0:^12}: {1:>5.2f}'.format('MSE', error))
+        print('finished classifier:\n', W)
+        break
+
+    W -= alpha * dW
+
+    iterations += 1
+
+    if iterations % (maxiterations // 100) == 0:
+        progress = 100 * iterations / maxiterations
+
+
+if iterations == maxiterations:
+    print('failure:')
+    #print('{0:^12}: {1:>5} ms'.format('time', int(1000 * (time.time() - starttime))))
+    print('MSE =', MSE(g_k, t_k_train))
+    print('W =', W)
+
+# confusion matrix training data
+g_k = predict(W, train_set)
+predictions = np.argmax(g_k, axis=0)
+answers = np.argmax(t_k_train, axis=0)
+
+conf = np.zeros((3, 3));
+
+for i, j in zip(predictions, answers):
+    conf[i, j] += 1
+print('training confusion:\n', conf)
