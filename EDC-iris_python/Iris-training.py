@@ -192,40 +192,17 @@ class_3_PWidth = class_3_all[:,1]
 class_3_SLength = class_3_all[:,2]
 class_3_SWidth = class_3_all[:,3]
 
-max_Plength_all = [np.amax(class_1_PLength),np.amax(class_2_PLength),np.amax(class_3_PLength)]
-max_Plength = np.amax(max_Plength_all)
-print ("Petal length maximums: " ,max_Plength)
+max_Plength = np.amax([np.amax(class_1_PLength),np.amax(class_2_PLength),np.amax(class_3_PLength)])
+min_Plength = np.amin([np.amin(class_1_PLength),np.amin(class_2_PLength),np.amin(class_3_PLength)])
 
-min_Plength_all = [np.amin(class_1_PLength),np.amin(class_2_PLength),np.amin(class_3_PLength)]
-min_Plength = np.amin(min_Plength_all)
-print ("Petal length mim: " ,min_Plength)
+max_PWidth = np.amax([np.amax(class_1_PWidth),np.amax(class_2_PWidth),np.amax(class_3_PWidth)])
+min_PWidth = np.amin([np.amin(class_1_PWidth),np.amin(class_2_PWidth),np.amin(class_3_PWidth)])
 
-max_PWidth_all = [np.amax(class_1_PWidth),np.amax(class_2_PWidth),np.amax(class_3_PWidth)]
-max_PWidth = np.amax(max_PWidth_all)
+max_Slength = np.amax([np.amax(class_1_SLength),np.amax(class_2_SLength),np.amax(class_3_SLength)])
+min_Slength = np.amin([np.amin(class_1_SLength),np.amin(class_2_SLength),np.amin(class_3_SLength)])
 
-
-min_PWidth_all = [np.amin(class_1_PWidth),np.amin(class_2_PWidth),np.amin(class_3_PWidth)]
-min_PWidth = np.amin(min_PWidth_all)
-
-max_Slength_all = [np.amax(class_1_SLength),np.amax(class_2_SLength),np.amax(class_3_SLength)]
-max_Slength = np.amax(max_Slength_all)
-
-
-min_Slength_all = [np.amin(class_1_SLength),np.amin(class_2_SLength),np.amin(class_3_SLength)]
-min_Slength = np.amin(min_Slength_all)
-
-
-max_SWidth_all = [np.amax(class_1_SWidth),np.amax(class_2_SWidth),np.amax(class_3_SWidth)]
-max_SWidth = np.amax(max_SWidth_all)
-
-
-min_SWidth_all = [np.amin(class_1_SWidth),np.amin(class_2_SWidth),np.amin(class_3_SWidth)]
-min_SWidth = np.amin(min_SWidth_all)
-
-
-
-
-
+max_SWidth = np.amax([np.amax(class_1_SWidth),np.amax(class_2_SWidth),np.amax(class_3_SWidth)])
+min_SWidth = np.amin([np.amin(class_1_SWidth),np.amin(class_2_SWidth),np.amin(class_3_SWidth)])
 
 
 plt.subplot(3,4,1).hist(class_1_PLength,10,range=(min_Plength,max_Plength))
