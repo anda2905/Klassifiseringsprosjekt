@@ -61,6 +61,7 @@ def error_rate(N,m):
     for i in m:
         e += i[0] + i[1] + i[2] - i[n]
         n += 1
+    print("#feil:", e)
     return e/N
 
 # De forskjellige blomstenes karakteristikker
