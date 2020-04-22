@@ -193,9 +193,21 @@ class_3_SLength = class_3_all[:,2]
 class_3_SWidth = class_3_all[:,3]
 
 
-plt.subplot(2,2,1).hist(class_1_PLength,10)
-plt.subplot(2,2,2).hist(class_2_PLength,10)
-plt.subplot(2,2,3).hist(class_3_PLength,10)
+plt.subplot(3,4,1).hist(class_1_PLength,10)
+plt.subplot(3,4,5).hist(class_2_PLength,10)
+plt.subplot(3,4,9).hist(class_3_PLength,10)
+
+plt.subplot(3,4,2).hist(class_1_PWidth,10)
+plt.subplot(3,4,6).hist(class_2_PWidth,10)
+plt.subplot(3,4,10).hist(class_3_PWidth,10)
+
+plt.subplot(3,4,3).hist(class_1_SLength,10)
+plt.subplot(3,4,7).hist(class_2_SLength,10)
+plt.subplot(3,4,11).hist(class_3_SLength,10)
+
+plt.subplot(3,4,4).hist(class_1_SWidth,10)
+plt.subplot(3,4,8).hist(class_2_SWidth,10)
+plt.subplot(3,4,12).hist(class_3_SWidth,10)
 
 
 plt.show()
