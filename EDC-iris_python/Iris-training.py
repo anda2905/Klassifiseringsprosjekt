@@ -204,29 +204,43 @@ ns.append(np.min(np.concatenate((class_1_SLength, class_2_SLength, class_3_SLeng
 ns.append(np.min(np.concatenate((class_1_SWidth , class_2_SWidth, class_3_SWidth))))
 
 
-plt.subplot(2,2,1)
+plt.subplot(2,3,1)
 plt.plot(class_1_PLength,"ro")
 plt.plot(class_2_PLength,"bo")
 plt.plot(class_3_PLength,"go")
 plt.xlabel("Petal length for the three cases")
 
-plt.subplot(2,2,2)
+plt.subplot(2,3,2)
 plt.plot(class_1_PWidth,"ro")
 plt.plot(class_2_PWidth,"bo")
 plt.plot(class_3_PWidth,"go")
 plt.xlabel("Petal width for the three cases")
 
-plt.subplot(2,2,3)
+plt.subplot(2,3,3)
 plt.plot(class_1_SLength,"ro")
 plt.plot(class_2_SLength,"bo")
 plt.plot(class_3_SLength,"go")
 plt.xlabel("Sepal length for the three cases")
 
-plt.subplot(2,2,4)
+plt.subplot(2,3,4)
 plt.plot(class_1_SWidth,"ro")
 plt.plot(class_2_SWidth,"bo")
 plt.plot(class_3_SWidth,"go")
 plt.xlabel("Sepal width for the three cases")
+
+plt.subplot(2,3,5)
+plt.plot(class_1_SLength, class_1_SWidth, "ro")
+plt.plot(class_2_SLength, class_2_SWidth, "bo")
+plt.plot(class_3_SLength,class_3_SWidth, "go")
+plt.xlabel("Sepal length for the three cases")
+plt.ylabel("Sepal width")
+
+plt.subplot(2,3,6)
+plt.plot(class_1_PLength, class_1_PWidth, "ro")
+plt.plot(class_2_PLength, class_2_PWidth, "bo")
+plt.plot(class_3_PLength,class_3_PWidth, "go")
+plt.xlabel("Petal length for the three cases")
+plt.ylabel("Petal width")
 
 #plt.subplot(3,4,1).hist(class_1_PLength,10, range=(ns[0]-0.1,ms[0]+0.1))
 #plt.xlabel("Petal length class 1")
