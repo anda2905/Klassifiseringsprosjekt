@@ -14,13 +14,7 @@ N_test = N_all-N_train
 #Burde kanskje ha en for løkke på alpha slik at den tunes helt til all test dataen er riktig?
 alpha = 0.1 #step factor
 
-#De forskjellige blomstenes karakteristikker
-attributes = np.array([
-	True, #petal length
-	True, #petal width
-	True, #sepal length
-	True, #sepal width
-])
+W = np.random.rand(y_train.shape[0], dimx + 1)  # W=classifying matrix, random initial values
 
 def sigmoid(x): #definerer sigmoid funksjonen (eq. 20)
     return 1 / (1 + np.exp(-x))
@@ -36,6 +30,14 @@ def MSE(guess, answer): #mean square error (eq. 19)
 def gradient(g, x, t): #eq 22, g_k, x_k, t_k
     # gardient for W that maximizes MSE (-dW minimizes)
     return np.matmul((g - t) * g * (1 - g), x.T)
+
+#De forskjellige blomstenes karakteristikker
+attributes = np.array([
+	True, #petal length
+	True, #petal width
+	True, #sepal length
+	True, #sepal width
+])
 
 class_1 = class_1_all[:, attributes]
 class_2 = class_2_all[:, attributes]
@@ -89,6 +91,3 @@ print("Correct answers for test data: ")
 print(t_k_test)
 print("")
 
-
-print(class_1_train)
-print(class_1_test)
