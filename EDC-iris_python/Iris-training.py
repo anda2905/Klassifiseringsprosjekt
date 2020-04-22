@@ -14,7 +14,7 @@ N_train = 30
 N_test = N_all-N_train
 N_columns = 4
 # Burde kanskje ha en for løkke på alpha slik at den tunes helt til all test dataen er riktig?
-alpha = 0.001# step factor
+alpha = 0.01# step factor
 
 # Correct answers for the training data
 t_k_train = np.concatenate((
@@ -55,6 +55,13 @@ def gradient(g, x, t):  # eq 22, g_k, x_k, t_k
     # gradient for W that maximizes MSE (-dW minimizes)
     return np.matmul((g - t) * g * (1 - g), x.T)
 
+def error_rate(N,m):
+    e = 0
+    n = 0
+    for i in m:
+        e += i[0] + i[1] + i[2] - i[n]
+        n += 1
+    return e/N
 
 # De forskjellige blomstenes karakteristikker
 attributes = np.array([
@@ -139,22 +146,27 @@ g_k_train = predict(W, train_set)
 predictions_train = np.argmax(g_k_train, axis=0)
 answers_train = np.argmax(t_k_train, axis=0)
 
-conf = np.zeros((3, 3))
+conf_train = np.zeros((3, 3))
 #Confusion matrix for training data.
 for i, j in zip(predictions_train, answers_train):
-    conf[i, j] += 1
-print('training confusion:\n', conf)
+    conf_train[i, j] += 1
+print('training confusion:\n', conf_train)
+print("train feil: ", error_rate(N_train,conf_train))
 
 #Runnig the classifier for the test set.
 g_k_test = predict(W, test_set)
 predictions_test = np.argmax(g_k_test, axis=0)
 answers_test = np.argmax(t_k_test, axis=0)
 
-conf = np.zeros((3, 3))
+conf_test = np.zeros((3, 3))
 #confusion matrix for the test set
 for i, j in zip(predictions_test, answers_test):
-    conf[i, j] += 1
-print('test confusion:\n', conf)
+    conf_test[i, j] += 1
+print('test confusion:\n', conf_test)
+
+print("test feil: ", error_rate(N_test,conf_test))
+
+
 
 
 
