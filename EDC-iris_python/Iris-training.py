@@ -8,8 +8,9 @@ class_1_all = np.loadtxt("class_1", float, delimiter=',') #Iris-setosa
 class_2_all = np.loadtxt("class_2", float, delimiter=',') #Iris-versicolor
 class_3_all = np.loadtxt("class_3", float, delimiter=',') #Iris-virginica
 
-N_train = 30
+
 N_all = 50
+N_train = 30
 N_test = N_all-N_train
 N_columns = 4
 #Burde kanskje ha en for løkke på alpha slik at den tunes helt til all test dataen er riktig?
@@ -129,13 +130,28 @@ if iterations == maxiterations:
     print('MSE =', MSE(g_k, t_k_train))
     print('W =', W)
 
-# confusion matrix training data
-g_k = predict(W, train_set)
-predictions = np.argmax(g_k, axis=0)
-answers = np.argmax(t_k_train, axis=0)
+# Running the classifier for the training set.
+g_k_train = predict(W, train_set)
+predictions_train = np.argmax(g_k_train, axis=0)
+answers_train = np.argmax(t_k_train, axis=0)
 
-conf = np.zeros((3, 3));
-
-for i, j in zip(predictions, answers):
+conf = np.zeros((3, 3))
+#Confusion matrix for training data.
+for i, j in zip(predictions_train, answers_train):
     conf[i, j] += 1
 print('training confusion:\n', conf)
+
+#Runnig the classifier for the test set.
+g_k_test = predict(W, test_set)
+predictions_test = np.argmax(g_k_test, axis=0)
+answers_test = np.argmax(t_k_test, axis=0)
+
+conf = np.zeros((3, 3))
+#confusion matrix for the test set
+for i, j in zip(predictions_test, answers_test):
+    conf[i, j] += 1
+print('test confusion:\n', conf)
+
+
+
+
