@@ -1,20 +1,20 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
-#g_k sigmoid(x_ik)
-#x_k input data, data fra klassematrise
-#t_k targets, class labels... hmm
-class_1_all = np.loadtxt("class_1", float, delimiter=',') #Iris-setosa
-class_2_all = np.loadtxt("class_2", float, delimiter=',') #Iris-versicolor
-class_3_all = np.loadtxt("class_3", float, delimiter=',') #Iris-virginica
+# g_k sigmoid(x_ik)
+# x_k input data, data fra klassematrise
+# t_k targets, class labels... hmm
+class_1_all = np.loadtxt("class_1", float, delimiter=',')  # Iris-setosa
+class_2_all = np.loadtxt("class_2", float, delimiter=',')  # Iris-versicolor
+class_3_all = np.loadtxt("class_3", float, delimiter=',')  # Iris-virginica
 
 
 N_all = 50
 N_train = 30
 N_test = N_all-N_train
 N_columns = 4
-#Burde kanskje ha en for løkke på alpha slik at den tunes helt til all test dataen er riktig?
-alpha = 0.01 #step factor
+# Burde kanskje ha en for løkke på alpha slik at den tunes helt til all test dataen er riktig?
+alpha = 0.001# step factor
 
 # Correct answers for the training data
 t_k_train = np.concatenate((
@@ -36,70 +36,75 @@ t_k_test = np.concatenate((
 
 W = np.random.rand(t_k_train.shape[0], N_columns + 1)  # W=classifying matrix, random initial values
 
-def sigmoid(x): #definerer sigmoid funksjonen (eq. 20)
+
+def sigmoid(x):  # definerer sigmoid funksjonen (eq. 20)
     return 1 / (1 + np.exp(-x))
 
-def predict(W, x): #bruker sigmoid og gir oss gk
-    # predictions
-    return sigmoid(np.matmul(W, x)) #matmul gir oss matriseproduktet av to arrays
 
-def MSE(guess, answer): #mean square error (eq. 19)
+def predict(W, x):  # bruker sigmoid og gir oss gk
+    # predictions
+    return sigmoid(np.matmul(W, x))  # matmul gir oss matriseproduktet av to arrays
+
+
+def MSE(guess, answer):  # mean square error (eq. 19)
     # square error
     return 1 / 2 * np.sum(np.linalg.norm(guess - answer, axis=0) ** 2)
 
-def gradient(g, x, t): #eq 22, g_k, x_k, t_k
-    # gardient for W that maximizes MSE (-dW minimizes)
+
+def gradient(g, x, t):  # eq 22, g_k, x_k, t_k
+    # gradient for W that maximizes MSE (-dW minimizes)
     return np.matmul((g - t) * g * (1 - g), x.T)
 
-#De forskjellige blomstenes karakteristikker
+
+# De forskjellige blomstenes karakteristikker
 attributes = np.array([
-	True, #petal length
-	True, #petal width
-	True, #sepal length
-	True, #sepal width
+    True,  # petal length
+    True,  # petal width
+    True,  # sepal length
+    True,  # sepal width
 ])
 
 class_1 = class_1_all[:, attributes]
 class_2 = class_2_all[:, attributes]
 class_3 = class_3_all[:, attributes]
 
-class_1_train = class_1[:N_train,:]  #[nedover, bortover], de første 30
-class_1_test = class_1[-N_test:,:] #[nedover, bortover], de 20 siste
-class_2_train = class_2[:N_train,:]  #[nedover, bortover], de første 30
-class_2_test = class_2[-N_test:,:] #[nedover, bortover], de 20 siste
-class_3_train = class_3[:N_train,:]  #[nedover, bortover], de første 30
-class_3_test = class_3[-N_test:,:] #[nedover, bortover], de 20 siste
+class_1_train = class_1[:N_train, :]  # [nedover, bortover], de første 30
+class_1_test = class_1[-N_test:, :]  # [nedover, bortover], de 20 siste
+class_2_train = class_2[:N_train, :]  # [nedover, bortover], de første 30
+class_2_test = class_2[-N_test:, :]  # [nedover, bortover], de 20 siste
+class_3_train = class_3[:N_train, :]  # [nedover, bortover], de første 30
+class_3_test = class_3[-N_test:, :]  # [nedover, bortover], de 20 siste
 
-train_set = np.concatenate((class_1_train, class_2_train, class_3_train))  # Joining all training data into a single vector
+train_set = np.concatenate(
+    (class_1_train, class_2_train, class_3_train))  # Joining all training data into a single vector
 train_set = np.concatenate((train_set, np.ones((train_set.shape[0], 1))), axis=1).T  # Adding bias coordinate
-
 
 test_set = np.concatenate((class_1_test, class_2_test, class_3_test))  # Joining all test data into a single vector
 test_set = np.concatenate((test_set, np.ones((test_set.shape[0], 1))), axis=1).T  # Adding bias coordinate
 
-#print("Train set: ")
-#print(train_set)
-#print("    ")
+# print("Train set: ")
+# print(train_set)
+# print("    ")
 
-#print("Test set: ")
-#print(test_set)
-#print("    ")
+# print("Test set: ")
+# print(test_set)
+# print("    ")
 
 
-#print("Correct answers for train data: ")
-#print(t_k_train)
-#print("")
+# print("Correct answers for train data: ")
+# print(t_k_train)
+# print("")
 
-#print("Correct answers for test data: ")
-#print(t_k_test)
-#print("")
+# print("Correct answers for test data: ")
+# print(t_k_test)
+# print("")
 
 # training
 
 maxiterations = 100000
-MSE_treshold = 0.1 * test_set.shape[0]  # if data is perfectly classified MSE reaches 0. Unlikely that this treshold is met
+MSE_treshold = 0.1 * test_set.shape[
+    0]  # if data is perfectly classified MSE reaches 0. Unlikely that this treshold is met
 dW_treshold = 0.02  # if dW is small it implies we are close to a local minimum (which is hopefully a global minimum)
-
 
 # gradient descent
 iterations = 0
@@ -111,7 +116,7 @@ while iterations < maxiterations:
     if error < MSE_treshold or np.linalg.norm(dW) < dW_treshold:
         print('<---- succes ---->')
         print('{0:^12}: {1:>5}'.format('iterations', iterations))
-        #print('{0:^12}: {1:>5} ms'.format('time', int(1000 * (time.time() - starttime))))
+        # print('{0:^12}: {1:>5} ms'.format('time', int(1000 * (time.time() - starttime))))
         print('{0:^12}: {1:>5.2f}'.format('MSE', error))
         print('finished classifier:\n', W)
         break
@@ -123,10 +128,9 @@ while iterations < maxiterations:
     if iterations % (maxiterations // 100) == 0:
         progress = 100 * iterations / maxiterations
 
-
 if iterations == maxiterations:
     print('failure:')
-    #print('{0:^12}: {1:>5} ms'.format('time', int(1000 * (time.time() - starttime))))
+    # print('{0:^12}: {1:>5} ms'.format('time', int(1000 * (time.time() - starttime))))
     print('MSE =', MSE(g_k, t_k_train))
     print('W =', W)
 
