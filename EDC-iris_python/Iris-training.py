@@ -120,8 +120,7 @@ test_set = np.concatenate((test_set, np.ones((test_set.shape[0], 1))), axis=1).T
 # training
 
 maxiterations = 100000
-MSE_treshold = 0.1 * test_set.shape[
-    0]  # if data is perfectly classified MSE reaches 0. Unlikely that this treshold is met
+MSE_treshold = 0.1*test_set.shape[0]  # if data is perfectly classified MSE reaches 0. Unlikely that this treshold is met
 dW_treshold = 0.02  # if dW is small it implies we are close to a local minimum (which is hopefully a global minimum)
 
 # gradient descent
@@ -134,7 +133,6 @@ while iterations < maxiterations:
     if error < MSE_treshold or np.linalg.norm(dW) < dW_treshold:
         print('<---- succes ---->')
         print('{0:^12}: {1:>5}'.format('iterations', iterations))
-        # print('{0:^12}: {1:>5} ms'.format('time', int(1000 * (time.time() - starttime))))
         print('{0:^12}: {1:>5.2f}'.format('MSE', error))
         print('finished classifier:\n', W)
         break
@@ -143,8 +141,9 @@ while iterations < maxiterations:
 
     iterations += 1
 
-    if iterations % (maxiterations // 100) == 0:
-        progress = 100 * iterations / maxiterations
+    #if iterations % (maxiterations // 100) == 0:
+     #   progress = 100 * iterations / maxiterations
+      #  print(progress, "%")
 
 if iterations == maxiterations:
     print('failure:')
@@ -203,33 +202,58 @@ ns.append(np.min(np.concatenate((class_1_PWidth , class_2_PWidth, class_3_PWidth
 ns.append(np.min(np.concatenate((class_1_SLength, class_2_SLength, class_3_SLength))))
 ns.append(np.min(np.concatenate((class_1_SWidth , class_2_SWidth, class_3_SWidth))))
 
-plt.subplot(3,4,1).hist(class_1_PLength,10, range=(ns[0]-0.1,ms[0]+0.1))
-plt.xlabel("Petal length class 1")
-plt.subplot(3,4,5).hist(class_2_PLength,10, range=(ns[0]-0.1,ms[0]+0.1))
-plt.xlabel("Petal length class 2")
-plt.subplot(3,4,9).hist(class_3_PLength,10, range=(ns[0]-0.1,ms[0]+0.1))
-plt.xlabel("Petal length class 3")
 
-plt.subplot(3,4,2).hist(class_1_PWidth,10, range=(ns[3]-0.1,ms[1]+0.1))
-plt.xlabel("Petal width class 1")
-plt.subplot(3,4,6).hist(class_2_PWidth,10, range=(ns[3]-0.1,ms[1]+0.1))
-plt.xlabel("Petal width class 1")
-plt.subplot(3,4,10).hist(class_3_PWidth,10, range=(ns[3]-0.1,ms[1]+0.1))
-plt.xlabel("Petal width class 3")
+plt.subplot(2,2,1)
+plt.plot(class_1_PLength,"ro")
+plt.plot(class_2_PLength,"bo")
+plt.plot(class_3_PLength,"go")
+plt.xlabel("Petal length for the three cases")
 
-plt.subplot(3,4,3).hist(class_1_SLength,10, range=(ns[2]-0.1,ms[2]+0.1))
-plt.xlabel("Sepal length class 1")
-plt.subplot(3,4,7).hist(class_2_SLength,10, range=(ns[2]-0.1,ms[2]+0.1))
-plt.xlabel("Sepal length class 2")
-plt.subplot(3,4,11).hist(class_3_SLength,10, range=(ns[2]-0.1,ms[2]+0.1))
-plt.xlabel("Sepal length class 3")
+plt.subplot(2,2,2)
+plt.plot(class_1_PWidth,"ro")
+plt.plot(class_2_PWidth,"bo")
+plt.plot(class_3_PWidth,"go")
+plt.xlabel("Petal width for the three cases")
 
-plt.subplot(3,4,4).hist(class_1_SWidth,10, range=(ns[3]-0.1,ms[3]+0.1))
-plt.xlabel("Sepal width class 1")
-plt.subplot(3,4,8).hist(class_2_SWidth,10, range=(ns[3]-0.1,ms[3]+0.1))
-plt.xlabel("Sepal width class 2")
-plt.subplot(3,4,12).hist(class_3_SWidth,10, range=(ns[3]-0.1,ms[3]+0.1))
-plt.xlabel("Sepal width class 3")
+plt.subplot(2,2,3)
+plt.plot(class_1_SLength,"ro")
+plt.plot(class_2_SLength,"bo")
+plt.plot(class_3_SLength,"go")
+plt.xlabel("Sepal length for the three cases")
+
+plt.subplot(2,2,4)
+plt.plot(class_1_SWidth,"ro")
+plt.plot(class_2_SWidth,"bo")
+plt.plot(class_3_SWidth,"go")
+plt.xlabel("Sepal width for the three cases")
+
+#plt.subplot(3,4,1).hist(class_1_PLength,10, range=(ns[0]-0.1,ms[0]+0.1))
+#plt.xlabel("Petal length class 1")
+#plt.subplot(3,4,5).hist(class_2_PLength,10, range=(ns[0]-0.1,ms[0]+0.1))
+#plt.xlabel("Petal length class 2")
+#plt.subplot(3,4,9).hist(class_3_PLength,10, range=(ns[0]-0.1,ms[0]+0.1))
+#plt.xlabel("Petal length class 3")
+
+#plt.subplot(3,4,2).hist(class_1_PWidth,10, range=(ns[3]-0.1,ms[1]+0.1))
+#plt.xlabel("Petal width class 1")
+#plt.subplot(3,4,6).hist(class_2_PWidth,10, range=(ns[3]-0.1,ms[1]+0.1))
+#plt.xlabel("Petal width class 1")
+#plt.subplot(3,4,10).hist(class_3_PWidth,10, range=(ns[3]-0.1,ms[1]+0.1))
+#plt.xlabel("Petal width class 3")
+
+#plt.subplot(3,4,3).hist(class_1_SLength,10, range=(ns[2]-0.1,ms[2]+0.1))
+#plt.xlabel("Sepal length class 1")
+#plt.subplot(3,4,7).hist(class_2_SLength,10, range=(ns[2]-0.1,ms[2]+0.1))
+#plt.xlabel("Sepal length class 2")
+#plt.subplot(3,4,11).hist(class_3_SLength,10, range=(ns[2]-0.1,ms[2]+0.1))
+#plt.xlabel("Sepal length class 3")
+
+#plt.subplot(3,4,4).hist(class_1_SWidth,10, range=(ns[3]-0.1,ms[3]+0.1))
+#plt.xlabel("Sepal width class 1")
+#plt.subplot(3,4,8).hist(class_2_SWidth,10, range=(ns[3]-0.1,ms[3]+0.1))
+#plt.xlabel("Sepal width class 2")
+#plt.subplot(3,4,12).hist(class_3_SWidth,10, range=(ns[3]-0.1,ms[3]+0.1))
+#plt.xlabel("Sepal width class 3")
 
 plt.tight_layout()
 plt.show()
