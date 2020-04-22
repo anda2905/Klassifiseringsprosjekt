@@ -1,4 +1,6 @@
 import numpy as np
+import matplotlib.pyplot as plt
+
 #g_k sigmoid(x_ik)
 #x_k input data, data fra klassematrise
 #t_k targets, class labels... hmm
@@ -19,6 +21,21 @@ attributes = np.array([
 	True, #sepal length
 	True, #sepal width
 ])
+
+def sigmoid(x): #definerer sigmoid funksjonen (eq. 20)
+    return 1 / (1 + np.exp(-x))
+
+def predict(W, x): #bruker sigmoid og gir oss gk
+    # predictions
+    return sigmoid(np.matmul(W, x)) #matmul gir oss matriseproduktet av to arrays
+
+def MSE(guess, answer): #mean square error (eq. 19)
+    # square error
+    return 1 / 2 * np.sum(np.linalg.norm(guess - answer, axis=0) ** 2)
+
+def gradient(g, x, t): #eq 22, g_k, x_k, t_k
+    # gardient for W that maximizes MSE (-dW minimizes)
+    return np.matmul((g - t) * g * (1 - g), x.T)
 
 class_1 = class_1_all[:, attributes]
 class_2 = class_2_all[:, attributes]
@@ -73,7 +90,5 @@ print(t_k_test)
 print("")
 
 
-
-
-#if (class_1_test[0,:] == class_1_test[0,:]).all(): sjekker at siste i test og første i train ikke er like, .all gjør at man kan sjekke likhet for arrays
-
+print(class_1_train)
+print(class_1_test)

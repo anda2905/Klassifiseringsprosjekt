@@ -56,6 +56,7 @@ y_test = np.concatenate((
 
 W = np.random.rand(y_train.shape[0], dimx + 1)  # W=classifying matrix, random initial values
 
+#if (class_1_test[0,:] == class_1_test[0,:]).all(): sjekker at siste i test og første i train ikke er like, .all gjør at man kan sjekke likhet for arrays
 
 def sigmoid(x): #eq 20
     return 1 / (1 + np.exp(-x))
