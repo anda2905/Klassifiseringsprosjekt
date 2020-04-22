@@ -192,48 +192,33 @@ class_3_PWidth = class_3_all[:,1]
 class_3_SLength = class_3_all[:,2]
 class_3_SWidth = class_3_all[:,3]
 
-max_Plength = np.amax([np.amax(class_1_PLength),np.amax(class_2_PLength),np.amax(class_3_PLength)])
-min_Plength = np.amin([np.amin(class_1_PLength),np.amin(class_2_PLength),np.amin(class_3_PLength)])
 
-max_PWidth = np.amax([np.amax(class_1_PWidth),np.amax(class_2_PWidth),np.amax(class_3_PWidth)])
-min_PWidth = np.amin([np.amin(class_1_PWidth),np.amin(class_2_PWidth),np.amin(class_3_PWidth)])
+ms = []
+ns = []
+ms.append(np.max(np.concatenate((class_1_PLength, class_2_PLength, class_3_PLength))))
+ms.append(np.max(np.concatenate((class_1_PWidth , class_2_PWidth, class_3_PWidth))))
+ms.append(np.max(np.concatenate((class_1_SLength, class_2_SLength, class_3_SLength))))
+ms.append(np.max(np.concatenate((class_1_SWidth , class_2_SWidth, class_3_SWidth))))
+ns.append(np.min(np.concatenate((class_1_PLength, class_2_PLength, class_3_PLength))))
+ns.append(np.min(np.concatenate((class_1_PWidth , class_2_PWidth, class_3_PWidth))))
+ns.append(np.min(np.concatenate((class_1_SLength, class_2_SLength, class_3_SLength))))
+ns.append(np.min(np.concatenate((class_1_SWidth , class_2_SWidth, class_3_SWidth))))
 
-max_Slength = np.amax([np.amax(class_1_SLength),np.amax(class_2_SLength),np.amax(class_3_SLength)])
-min_Slength = np.amin([np.amin(class_1_SLength),np.amin(class_2_SLength),np.amin(class_3_SLength)])
+plt.subplot(3,4,1).hist(class_1_PLength,10, range=(ns[0]-0.1,ms[0]+0.1))
+plt.subplot(3,4,5).hist(class_2_PLength,10, range=(ns[0]-0.1,ms[0]+0.1))
+plt.subplot(3,4,9).hist(class_3_PLength,10, range=(ns[0]-0.1,ms[0]+0.1))
 
-max_SWidth = np.amax([np.amax(class_1_SWidth),np.amax(class_2_SWidth),np.amax(class_3_SWidth)])
-min_SWidth = np.amin([np.amin(class_1_SWidth),np.amin(class_2_SWidth),np.amin(class_3_SWidth)])
+plt.subplot(3,4,2).hist(class_1_PWidth,10, range=(ns[3]-0.1,ms[1]+0.1))
+plt.subplot(3,4,6).hist(class_2_PWidth,10, range=(ns[3]-0.1,ms[1]+0.1))
+plt.subplot(3,4,10).hist(class_3_PWidth,10, range=(ns[3]-0.1,ms[1]+0.1))
 
+plt.subplot(3,4,3).hist(class_1_SLength,10, range=(ns[2]-0.1,ms[2]+0.1))
+plt.subplot(3,4,7).hist(class_2_SLength,10, range=(ns[2]-0.1,ms[2]+0.1))
+plt.subplot(3,4,11).hist(class_3_SLength,10, range=(ns[2]-0.1,ms[2]+0.1))
 
-plt.subplot(3,4,1).hist(class_1_PLength,10,range=(min_Plength,max_Plength))
-plt.xlabel("Petal length class 1")
-plt.subplot(3,4,5).hist(class_2_PLength,10,range=(min_Plength,max_Plength))
-plt.xlabel("Petal length class 2")
-plt.subplot(3,4,9).hist(class_3_PLength,10,range=(min_Plength,max_Plength))
-plt.xlabel("Petal length class 3")
+plt.subplot(3,4,4).hist(class_1_SWidth,10, range=(ns[3]-0.1,ms[3]+0.1))
+plt.subplot(3,4,8).hist(class_2_SWidth,10, range=(ns[3]-0.1,ms[3]+0.1))
+plt.subplot(3,4,12).hist(class_3_SWidth,10, range=(ns[3]-0.1,ms[3]+0.1))
 
-plt.subplot(3,4,2).hist(class_1_PWidth,10,range=(min_PWidth,max_PWidth))
-plt.xlabel("Petal width class 1")
-plt.subplot(3,4,6).hist(class_2_PWidth,10,range=(min_PWidth,max_PWidth))
-plt.xlabel("Petal width class 2")
-plt.subplot(3,4,10).hist(class_3_PWidth,10,range=(min_PWidth,max_PWidth))
-plt.xlabel("Petal width class 3")
-
-plt.subplot(3,4,3).hist(class_1_SLength,10,range=(min_Slength,max_Slength))
-plt.xlabel("Sepal length class 1")
-plt.subplot(3,4,7).hist(class_2_SLength,10,range=(min_Slength,max_Slength))
-plt.xlabel("Sepal length class 2")
-plt.subplot(3,4,11).hist(class_3_SLength,10,range=(min_Slength,max_Slength))
-plt.xlabel("Sepal length class 3")
-
-plt.subplot(3,4,4).hist(class_1_SWidth,10,range=(min_SWidth,max_SWidth))
-plt.xlabel("Sepal width class 1")
-plt.subplot(3,4,8).hist(class_2_SWidth,10,range=(min_SWidth,max_SWidth))
-plt.xlabel("Sepal width class 2")
-plt.subplot(3,4,12).hist(class_3_SWidth,10,range=(min_SWidth,max_SWidth))
-plt.xlabel("Sepal width class 3")
-
-
-
-
+plt.tight_layout()
 plt.show()
