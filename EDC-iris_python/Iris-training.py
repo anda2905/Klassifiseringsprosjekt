@@ -11,10 +11,28 @@ class_3_all = np.loadtxt("class_3", float, delimiter=',') #Iris-virginica
 N_train = 30
 N_all = 50
 N_test = N_all-N_train
+N_columns = 4
 #Burde kanskje ha en for løkke på alpha slik at den tunes helt til all test dataen er riktig?
 alpha = 0.1 #step factor
 
-W = np.random.rand(y_train.shape[0], dimx + 1)  # W=classifying matrix, random initial values
+# Correct answers for the training data
+t_k_train = np.concatenate((
+    np.repeat(np.array([[1], [0], [0]]), N_train, axis=1),
+    np.repeat(np.array([[0], [1], [0]]), N_train, axis=1),
+    np.repeat(np.array([[0], [0], [1]]), N_train, axis=1),
+),
+    axis=1
+)
+
+t_k_test = np.concatenate((
+    np.repeat(np.array([[1], [0], [0]]), N_test, axis=1),
+    np.repeat(np.array([[0], [1], [0]]), N_test, axis=1),
+    np.repeat(np.array([[0], [0], [1]]), N_test, axis=1),
+),
+    axis=1
+)
+
+W = np.random.rand(t_k_train.shape[0], N_columns + 1)  # W=classifying matrix, random initial values
 
 def sigmoid(x): #definerer sigmoid funksjonen (eq. 20)
     return 1 / (1 + np.exp(-x))
@@ -64,24 +82,6 @@ print("    ")
 print("Test set: ")
 print(test_set)
 print("    ")
-
-
-# Correct answers for the training data
-t_k_train = np.concatenate((
-    np.repeat(np.array([[1], [0], [0]]), N_train, axis=1),
-    np.repeat(np.array([[0], [1], [0]]), N_train, axis=1),
-    np.repeat(np.array([[0], [0], [1]]), N_train, axis=1),
-),
-    axis=1
-)
-
-t_k_test = np.concatenate((
-    np.repeat(np.array([[1], [0], [0]]), N_test, axis=1),
-    np.repeat(np.array([[0], [1], [0]]), N_test, axis=1),
-    np.repeat(np.array([[0], [0], [1]]), N_test, axis=1),
-),
-    axis=1
-)
 
 print("Correct answers for train data: ")
 print(t_k_train)
