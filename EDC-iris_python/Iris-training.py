@@ -192,8 +192,8 @@ class_3_PWidth = class_3_all[:,1]
 class_3_SLength = class_3_all[:,2]
 class_3_SWidth = class_3_all[:,3]
 
-ms = []
-ns = []
+ms = [] # henter maksverdien for hver av karakteristikkene
+ns = [] # henter minimumsverdien for hver av karakteristikkene
 ms.append(np.max(np.concatenate((class_1_PLength, class_2_PLength, class_3_PLength))))
 ms.append(np.max(np.concatenate((class_1_PWidth , class_2_PWidth, class_3_PWidth))))
 ms.append(np.max(np.concatenate((class_1_SLength, class_2_SLength, class_3_SLength))))
