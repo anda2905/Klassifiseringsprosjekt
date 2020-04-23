@@ -8,13 +8,12 @@ class_1_all = np.loadtxt("class_1", float, delimiter=',')  # Iris-setosa
 class_2_all = np.loadtxt("class_2", float, delimiter=',')  # Iris-versicolor
 class_3_all = np.loadtxt("class_3", float, delimiter=',')  # Iris-virginica
 
-
 N_all = 50
 N_train = 30
-N_test = N_all-N_train
-N_columns = 4
+N_test = N_all - N_train
+N_columns = 1
 # Burde kanskje ha en for løkke på alpha slik at den tunes helt til all test dataen er riktig?
-alpha = 0.01# step factor
+alpha = 0.01  # step factor
 
 # Correct answers for the training data
 t_k_train = np.concatenate((
@@ -55,20 +54,22 @@ def gradient(g, x, t):  # eq 22, g_k, x_k, t_k
     # gradient for W that maximizes MSE (-dW minimizes)
     return np.matmul((g - t) * g * (1 - g), x.T)
 
-def error_rate(N,m):
+
+def error_rate(N, m):
     e = 0
     n = 0
     for i in m:
         e += i[0] + i[1] + i[2] - i[n]
         n += 1
     print("#feil:", e)
-    return e/N
+    return e / N
+
 
 # De forskjellige blomstenes karakteristikker
 attributes = np.array([
-    True,  # petal length
-    True,  # petal width
-    True,  # sepal length
+    False,  # petal length
+    False,  # petal width
+    False,  # sepal length
     True,  # sepal width
 ])
 
@@ -76,7 +77,7 @@ class_1 = class_1_all[:, attributes]
 class_2 = class_2_all[:, attributes]
 class_3 = class_3_all[:, attributes]
 
-#Defining first 30 for test, last 20 for testing
+# Defining first 30 for test, last 20 for testing
 class_1_train = class_1[:N_train, :]  # [nedover, bortover], de første 30
 class_1_test = class_1[-N_test:, :]  # [nedover, bortover], de 20 siste
 class_2_train = class_2[:N_train, :]  # [nedover, bortover], de første 30
@@ -84,14 +85,13 @@ class_2_test = class_2[-N_test:, :]  # [nedover, bortover], de 20 siste
 class_3_train = class_3[:N_train, :]  # [nedover, bortover], de første 30
 class_3_test = class_3[-N_test:, :]  # [nedover, bortover], de 20 siste
 
-
-#Defining last 30 for training and first 20 for testing
-#class_1_train = class_1[-N_train:, :]  # [nedover, bortover], de siste 30
-#class_1_test = class_1[:N_test, :]  # [nedover, bortover], de først 20
-#class_2_train = class_2[-N_train:, :]  # [nedover, bortover], de siste 30
-#class_2_test = class_2[:N_test, :]  # [nedover, bortover], de 20 først
-#class_3_train = class_3[-N_train:, :]  # [nedover, bortover], de siste 30
-#class_3_test = class_3[:N_test, :]  # [nedover, bortover], de 20 første
+# Defining last 30 for training and first 20 for testing
+# class_1_train = class_1[-N_train:, :]  # [nedover, bortover], de siste 30
+# class_1_test = class_1[:N_test, :]  # [nedover, bortover], de først 20
+# class_2_train = class_2[-N_train:, :]  # [nedover, bortover], de siste 30
+# class_2_test = class_2[:N_test, :]  # [nedover, bortover], de 20 først
+# class_3_train = class_3[-N_train:, :]  # [nedover, bortover], de siste 30
+# class_3_test = class_3[:N_test, :]  # [nedover, bortover], de 20 første
 
 train_set = np.concatenate(
     (class_1_train, class_2_train, class_3_train))  # Joining all training data into a single vector
@@ -120,7 +120,8 @@ test_set = np.concatenate((test_set, np.ones((test_set.shape[0], 1))), axis=1).T
 # training
 
 maxiterations = 100000
-MSE_treshold = 0.1*test_set.shape[0]  # if data is perfectly classified MSE reaches 0. Unlikely that this treshold is met
+MSE_treshold = 0.1 * test_set.shape[
+    0]  # if data is perfectly classified MSE reaches 0. Unlikely that this treshold is met
 dW_treshold = 0.02  # if dW is small it implies we are close to a local minimum (which is hopefully a global minimum)
 
 # gradient descent
@@ -141,9 +142,9 @@ while iterations < maxiterations:
 
     iterations += 1
 
-    #if iterations % (maxiterations // 100) == 0:
-     #   progress = 100 * iterations / maxiterations
-      #  print(progress, "%")
+    # if iterations % (maxiterations // 100) == 0:
+    #   progress = 100 * iterations / maxiterations
+    #  print(progress, "%")
 
 if iterations == maxiterations:
     print('failure:')
@@ -157,50 +158,50 @@ predictions_train = np.argmax(g_k_train, axis=0)
 answers_train = np.argmax(t_k_train, axis=0)
 
 conf_train = np.zeros((3, 3))
-#Confusion matrix for training data.
+# Confusion matrix for training data.
 for i, j in zip(predictions_train, answers_train):
     conf_train[i, j] += 1
 print('training confusion:\n', conf_train)
-print("train feil: ", error_rate(N_train,conf_train))
+print("train feil: ", error_rate(N_train, conf_train))
 
-#Runnig the classifier for the test set.
+# Runnig the classifier for the test set.
 g_k_test = predict(W, test_set)
 predictions_test = np.argmax(g_k_test, axis=0)
 answers_test = np.argmax(t_k_test, axis=0)
 
 conf_test = np.zeros((3, 3))
-#confusion matrix for the test set
+# confusion matrix for the test set
 for i, j in zip(predictions_test, answers_test):
     conf_test[i, j] += 1
 print('test confusion:\n', conf_test)
 
-print("test feil: ", error_rate(N_test,conf_test))
+print("test feil: ", error_rate(N_test, conf_test))
 
-class_1_PLength = class_1_all[:,0]
-class_1_PWidth = class_1_all[:,1]
-class_1_SLength = class_1_all[:,2]
-class_1_SWidth = class_1_all[:,3]
+class_1_PLength = class_1_all[:, 0]
+class_1_PWidth = class_1_all[:, 1]
+class_1_SLength = class_1_all[:, 2]
+class_1_SWidth = class_1_all[:, 3]
 
-class_2_PLength = class_2_all[:,0]
-class_2_PWidth = class_2_all[:,1]
-class_2_SLength = class_2_all[:,2]
-class_2_SWidth = class_2_all[:,3]
+class_2_PLength = class_2_all[:, 0]
+class_2_PWidth = class_2_all[:, 1]
+class_2_SLength = class_2_all[:, 2]
+class_2_SWidth = class_2_all[:, 3]
 
-class_3_PLength = class_3_all[:,0]
-class_3_PWidth = class_3_all[:,1]
-class_3_SLength = class_3_all[:,2]
-class_3_SWidth = class_3_all[:,3]
+class_3_PLength = class_3_all[:, 0]
+class_3_PWidth = class_3_all[:, 1]
+class_3_SLength = class_3_all[:, 2]
+class_3_SWidth = class_3_all[:, 3]
 
-ms = [] # henter maksverdien for hver av karakteristikkene
-ns = [] # henter minimumsverdien for hver av karakteristikkene
+ms = []  # henter maksverdien for hver av karakteristikkene
+ns = []  # henter minimumsverdien for hver av karakteristikkene
 ms.append(np.max(np.concatenate((class_1_PLength, class_2_PLength, class_3_PLength))))
-ms.append(np.max(np.concatenate((class_1_PWidth , class_2_PWidth, class_3_PWidth))))
+ms.append(np.max(np.concatenate((class_1_PWidth, class_2_PWidth, class_3_PWidth))))
 ms.append(np.max(np.concatenate((class_1_SLength, class_2_SLength, class_3_SLength))))
-ms.append(np.max(np.concatenate((class_1_SWidth , class_2_SWidth, class_3_SWidth))))
+ms.append(np.max(np.concatenate((class_1_SWidth, class_2_SWidth, class_3_SWidth))))
 ns.append(np.min(np.concatenate((class_1_PLength, class_2_PLength, class_3_PLength))))
-ns.append(np.min(np.concatenate((class_1_PWidth , class_2_PWidth, class_3_PWidth))))
+ns.append(np.min(np.concatenate((class_1_PWidth, class_2_PWidth, class_3_PWidth))))
 ns.append(np.min(np.concatenate((class_1_SLength, class_2_SLength, class_3_SLength))))
-ns.append(np.min(np.concatenate((class_1_SWidth , class_2_SWidth, class_3_SWidth))))
+ns.append(np.min(np.concatenate((class_1_SWidth, class_2_SWidth, class_3_SWidth))))
 
 
 plt.subplot(2,3,1)
@@ -227,6 +228,8 @@ plt.plot(class_2_SWidth,"bo")
 plt.plot(class_3_SWidth,"go")
 plt.xlabel("Sepal width for the three cases")
 
+plt.tight_layout()
+plt.show()
 plt.subplot(2,3,5)
 plt.plot(class_1_SLength, class_1_SWidth, "ro")
 plt.plot(class_2_SLength, class_2_SWidth, "bo")
@@ -248,26 +251,33 @@ plt.ylabel("Petal width")
 #plt.subplot(3,4,9).hist(class_3_PLength,10, range=(ns[0]-0.1,ms[0]+0.1))
 #plt.xlabel("Petal length class 3")
 
-#plt.subplot(3,4,2).hist(class_1_PWidth,10, range=(ns[3]-0.1,ms[1]+0.1))
-#plt.xlabel("Petal width class 1")
-#plt.subplot(3,4,6).hist(class_2_PWidth,10, range=(ns[3]-0.1,ms[1]+0.1))
-#plt.xlabel("Petal width class 1")
-#plt.subplot(3,4,10).hist(class_3_PWidth,10, range=(ns[3]-0.1,ms[1]+0.1))
-#plt.xlabel("Petal width class 3")
+plt.subplot(3,4,1).hist(class_1_PLength,10, range=(ns[0]-0.1,ms[0]+0.1))
+plt.xlabel("Petal length class 1")
+plt.subplot(3,4,5).hist(class_2_PLength,10, range=(ns[0]-0.1,ms[0]+0.1))
+plt.xlabel("Petal length class 2")
+plt.subplot(3,4,9).hist(class_3_PLength,10, range=(ns[0]-0.1,ms[0]+0.1))
+plt.xlabel("Petal length class 3")
 
-#plt.subplot(3,4,3).hist(class_1_SLength,10, range=(ns[2]-0.1,ms[2]+0.1))
-#plt.xlabel("Sepal length class 1")
-#plt.subplot(3,4,7).hist(class_2_SLength,10, range=(ns[2]-0.1,ms[2]+0.1))
-#plt.xlabel("Sepal length class 2")
-#plt.subplot(3,4,11).hist(class_3_SLength,10, range=(ns[2]-0.1,ms[2]+0.1))
-#plt.xlabel("Sepal length class 3")
+plt.subplot(3,4,2).hist(class_1_PWidth,10, range=(ns[3]-0.1,ms[1]+0.1))
+plt.xlabel("Petal width class 1")
+plt.subplot(3,4,6).hist(class_2_PWidth,10, range=(ns[3]-0.1,ms[1]+0.1))
+plt.xlabel("Petal width class 1")
+plt.subplot(3,4,10).hist(class_3_PWidth,10, range=(ns[3]-0.1,ms[1]+0.1))
+plt.xlabel("Petal width class 3")
 
-#plt.subplot(3,4,4).hist(class_1_SWidth,10, range=(ns[3]-0.1,ms[3]+0.1))
-#plt.xlabel("Sepal width class 1")
-#plt.subplot(3,4,8).hist(class_2_SWidth,10, range=(ns[3]-0.1,ms[3]+0.1))
-#plt.xlabel("Sepal width class 2")
-#plt.subplot(3,4,12).hist(class_3_SWidth,10, range=(ns[3]-0.1,ms[3]+0.1))
-#plt.xlabel("Sepal width class 3")
+plt.subplot(3,4,3).hist(class_1_SLength,10, range=(ns[2]-0.1,ms[2]+0.1))
+plt.xlabel("Sepal length class 1")
+plt.subplot(3,4,7).hist(class_2_SLength,10, range=(ns[2]-0.1,ms[2]+0.1))
+plt.xlabel("Sepal length class 2")
+plt.subplot(3,4,11).hist(class_3_SLength,10, range=(ns[2]-0.1,ms[2]+0.1))
+plt.xlabel("Sepal length class 3")
+
+plt.subplot(3,4,4).hist(class_1_SWidth,10, range=(ns[3]-0.1,ms[3]+0.1))
+plt.xlabel("Sepal width class 1")
+plt.subplot(3,4,8).hist(class_2_SWidth,10, range=(ns[3]-0.1,ms[3]+0.1))
+plt.xlabel("Sepal width class 2")
+plt.subplot(3,4,12).hist(class_3_SWidth,10, range=(ns[3]-0.1,ms[3]+0.1))
+plt.xlabel("Sepal width class 3")
 
 plt.tight_layout()
 plt.show()
