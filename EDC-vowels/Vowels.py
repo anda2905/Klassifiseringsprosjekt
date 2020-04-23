@@ -4,12 +4,7 @@ import matplotlib.pyplot as plt
 data = np.genfromtxt('vowdata_nohead.dat', dtype='U16')
 identifiers = data[:, 0]
 data = data[:,1:16].astype(np.int)
-print(data)
-print(identifiers)
 
-#vowel (ae="had", ah="hod", aw="hawed", eh="head", er="heard",
- #                       ei="haid", ih="hid", iy="heed", oa=/o/ as in "boat",
-  #                      oo="hood", uh="hud", uw="who'd")
 
 
 N_train = 70
@@ -32,3 +27,13 @@ ih_training=data[6*N_all:6*N_all + N_train, :]
 ih_test=data[6*N_all + N_train:7*N_all,:]
 iy_training=data[7*N_all:7*N_all + N_train, :]
 iy_test=data[7*N_all + N_train:8*N_all,:]
+oa_training=data[8*N_all:8*N_all + N_train, :]
+oa_test=data[8*N_all + N_train:9*N_all,:]
+oo_training=data[9*N_all:9*N_all + N_train, :]
+oo_test=data[9*N_all + N_train:10*N_all,:]
+uh_training=data[10*N_all:10*N_all + N_train, :]
+uh_test=data[10*N_all + N_train:11*N_all,:]
+uw_training=data[11*N_all:11*N_all + N_train, :]
+uw_test=data[11*N_all + N_train:12*N_all,:]
+
+print(uw_test)
