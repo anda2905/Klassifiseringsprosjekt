@@ -1,6 +1,8 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
-data = np.loadtxt("vowdata_nohead.dat", dtype = [str] + 16* [float],  delimiter=' ')
-
+data = np.genfromtxt('vowdata_nohead.dat', dtype='U16')
+identifiers = data[:, 0]
+data = data[:, 7:16].astype(np.int)
 print(data)
+print(identifiers)
