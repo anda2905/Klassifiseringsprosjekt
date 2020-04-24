@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 
 data = np.genfromtxt('vowdata_nohead.dat', dtype='U16')
 identifiers = data[:, 0]
-data = data[:,1:16].astype(np.int)
+data = data[:,2:7].astype(np.int)
 
 vowels = ['ae', 'ah', 'aw', 'eh', 'er', 'ei', 'ih', 'iy', 'oa', 'oo', 'uh', 'uw']
 
@@ -24,9 +24,6 @@ train_set = data[train_index]
 test_set = data[test_index]
 
 
-
-
-
 ae=data[:N_all, :]
 ah=data[N_all:2*N_all, :]
 aw=data[2*N_all:3*N_all, :]
@@ -40,7 +37,21 @@ oo=data[9*N_all:10*N_all, :]
 uh=data[10*N_all:11*N_all, :]
 uw=data[11*N_all:12*N_all, :]
 
+ae_mean = ae.mean()
+ah_mean = ah.mean()
+aw_mean = aw.mean()
+eh_mean = eh.mean()
+er_mean = er.mean()
+ei_mean = ei.mean()
+ih_mean = ih.mean()
+iy_mean = iy.mean()
+oa_mean = oa.mean()
+oo_mean = oo.mean()
+uh_mean = uh.mean()
+uw_mean = uw.mean()
+print(aw_mean)
 
-print(ae)
+cov_matrix_ae=np.cov(ae)
+print(cov_matrix_ae)
 
 
