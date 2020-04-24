@@ -7,7 +7,6 @@ data = data[:,2:7].astype(np.int)
 
 vowels = ['ae', 'ah', 'aw', 'eh', 'er', 'ei', 'ih', 'iy', 'oa', 'oo', 'uh', 'uw']
 
-
 N_train = 70
 N_test = 69
 N_all = N_train+N_test
@@ -49,9 +48,38 @@ oa_mean = oa.mean()
 oo_mean = oo.mean()
 uh_mean = uh.mean()
 uw_mean = uw.mean()
-print(aw_mean)
 
-cov_matrix_ae=np.cov(ae)
-print(cov_matrix_ae)
+print("ae mean:", ae_mean)
+print("ah mean:", ah_mean)
+print("aw mean:", aw_mean)
+print("eh mean:", eh_mean)
+print("er mean:", er_mean)
+print("ei mean:", ei_mean)
+print("ih mean:", ih_mean)
+print("iy mean:", iy_mean)
+print("oa mean:", oa_mean)
+print("oo mean:", oo_mean)
+print("uh mean:", uh_mean)
+print("uw mean:", uw_mean)
+
+def cov_matrix(m):
+        return np.cov(m.T)
+
+print("covariance matrix for ae:\n", cov_matrix(ae))
+print("covariance matrix for ah:\n", cov_matrix(ah))
+print("covariance matrix for aw:\n", cov_matrix(aw))
+print("covariance matrix for eh:\n", cov_matrix(eh))
+print("covariance matrix for er:\n", cov_matrix(er))
+print("covariance matrix for ei:\n", cov_matrix(ei))
+print("covariance matrix for ih:\n", cov_matrix(ih))
+print("covariance matrix for iy:\n", cov_matrix(iy))
+print("covariance matrix for oa:\n", cov_matrix(oa))
+print("covariance matrix for oo:\n", cov_matrix(oo))
+print("covariance matrix for uh:\n", cov_matrix(uh))
+print("covariance matrix for uw:\n", cov_matrix(uw))
+
+
+
+
 
 
