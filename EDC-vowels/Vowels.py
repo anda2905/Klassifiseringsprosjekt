@@ -5,26 +5,38 @@ from scipy.stats import multivariate_normal
 
 data = np.genfromtxt('vowdata_nohead.dat', dtype='U16')
 identifiers = data[:, 0]
-data = data[:,2:7].astype(np.int)
+data = data[:, 2:7].astype(np.int)
 
 vowels = ['ae', 'ah', 'aw', 'eh', 'er', 'ei', 'ih', 'iy', 'oa', 'oo', 'uh', 'uw']
 
 
 N_train = 70
 N_test = 69
-N_all = N_train+N_test
+N_all = N_train + N_test
 
 train_index = []
 test_index = []
 
 for vowel in vowels:
-        index = np.flatnonzero(np.core.defchararray.find(identifiers,vowel)!=-1)
-        train_index.extend(index[:N_train])
-        test_index.extend(index[N_train:])
+    index = np.flatnonzero(np.core.defchararray.find(identifiers, vowel) != -1)
+    train_index.extend(index[:N_train])
+    test_index.extend(index[N_train:])
 
 train_set = data[train_index]
 test_set = data[test_index]
 
+ae = data[:N_all, :]
+ah = data[N_all:2 * N_all, :]
+aw = data[2 * N_all:3 * N_all, :]
+eh = data[3 * N_all:4 * N_all, :]
+er = data[4 * N_all:5 * N_all, :]
+ei = data[5 * N_all:6 * N_all, :]
+ih = data[6 * N_all:7 * N_all, :]
+iy = data[7 * N_all:8 * N_all, :]
+oa = data[8 * N_all:9 * N_all, :]
+oo = data[9 * N_all:10 * N_all, :]
+uh = data[10 * N_all:11 * N_all, :]
+uw = data[11 * N_all:12 * N_all, :]
 
 ae_training=data[:N_train, :]
 ae_test=data[N_train:N_all,:]
@@ -81,7 +93,7 @@ vowels_test = [ae_test,ah_test,aw_test,eh_test,er_test,ei_test,ih_test,iy_test,o
 #print("uw mean:", uw_mean)
 
 def cov_matrix(m):
-        return np.cov(m.T)
+    return np.cov(m.T)
 
 #print("covariance matrix for ae:\n", cov_matrix(ae))
 #print("covariance matrix for ah:\n", cov_matrix(ah))
@@ -101,8 +113,8 @@ def mean(m):
     return mean
 
 def cov(m):
-        c = np.dot((m-m.mean(axis=0)).T,(m-m.mean(axis=0)))/(len(m)-1)
-        return c
+    c = np.dot((m - m.mean(axis=0)).T, (m - m.mean(axis=0))) / (len(m) - 1)
+    return c
 
 #print("covae2:",cov(ae))
 
