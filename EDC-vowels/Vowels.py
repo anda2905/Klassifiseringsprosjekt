@@ -81,11 +81,11 @@ print("covariance matrix for uh:\n", cov_matrix(uh))
 print("covariance matrix for uw:\n", cov_matrix(uw))
 
 
+def cov(m):
+        c = np.dot((m-m.mean(axis=0)).T,(m-m.mean(axis=0)))/(len(m)-1)
+        return c
 
-
-cov_ae=np.dot((ae-ae_mean).T,(ae-ae_mean))/(len(ae)-1)
-
-
+print("covae2:",cov(ae))
 
 rv = multivariate_normal(mean=ae_mean,cov=cov_ae)
 
