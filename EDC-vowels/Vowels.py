@@ -1,6 +1,8 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
+from scipy.stats import multivariate_normal
+
 data = np.genfromtxt('vowdata_nohead.dat', dtype='U16')
 identifiers = data[:, 0]
 data = data[:,2:7].astype(np.int)
@@ -36,18 +38,18 @@ oo=data[9*N_all:10*N_all, :]
 uh=data[10*N_all:11*N_all, :]
 uw=data[11*N_all:12*N_all, :]
 
-ae_mean = ae.mean()
-ah_mean = ah.mean()
-aw_mean = aw.mean()
-eh_mean = eh.mean()
-er_mean = er.mean()
-ei_mean = ei.mean()
-ih_mean = ih.mean()
-iy_mean = iy.mean()
-oa_mean = oa.mean()
-oo_mean = oo.mean()
-uh_mean = uh.mean()
-uw_mean = uw.mean()
+ae_mean = ae.mean(axis=0)
+ah_mean = ah.mean(axis=0)
+aw_mean = aw.mean(axis=0)
+eh_mean = eh.mean(axis=0)
+er_mean = er.mean(axis=0)
+ei_mean = ei.mean(axis=0)
+ih_mean = ih.mean(axis=0)
+iy_mean = iy.mean(axis=0)
+oa_mean = oa.mean(axis=0)
+oo_mean = oo.mean(axis=0)
+uh_mean = uh.mean(axis=0)
+uw_mean = uw.mean(axis=0)
 
 print("ae mean:", ae_mean)
 print("ah mean:", ah_mean)
@@ -77,6 +79,22 @@ print("covariance matrix for oa:\n", cov_matrix(oa))
 print("covariance matrix for oo:\n", cov_matrix(oo))
 print("covariance matrix for uh:\n", cov_matrix(uh))
 print("covariance matrix for uw:\n", cov_matrix(uw))
+
+
+
+
+cov_ae=np.dot((ae-ae_mean).T,(ae-ae_mean))/(len(ae)-1)
+
+
+
+rv = multivariate_normal(mean=ae_mean,cov=cov_ae)
+
+#print("f: ")
+#print(cov_ae[1])
+
+print("   ")
+print("   ")
+print(rv)
 
 
 
