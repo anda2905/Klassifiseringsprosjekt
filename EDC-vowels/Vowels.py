@@ -63,7 +63,34 @@ uh_test=data[10*N_all + N_train:11*N_all,:]
 uw_training=data[11*N_all:11*N_all + N_train, :]
 uw_test=data[11*N_all + N_train:12*N_all,:]
 
-vowels_train =[ae_training,ah_training,aw_training,eh_training,er_training,ei_training,ih_training,iy_training,oa_training,oo_training,uh_training,uw_training]
+vowels_train = []
+vowels_train.append(ae_training)
+vowels_train.append(ah_training)
+vowels_train.append(aw_training)
+vowels_train.append(eh_training)
+vowels_train.append(er_training)
+vowels_train.append(ei_training)
+vowels_train.append(ih_training)
+vowels_train.append(iy_training)
+vowels_train.append(oa_training)
+vowels_train.append(oo_training)
+vowels_train.append(uh_training)
+vowels_train.append(uw_training)
+
+vowels_test = []
+vowels_test.append(ae_test)
+vowels_test.append(ah_test)
+vowels_test.append(aw_test)
+vowels_test.append(eh_test)
+vowels_test.append(er_test)
+vowels_test.append(ei_test)
+vowels_test.append(ih_test)
+vowels_test.append(iy_test)
+vowels_test.append(oa_test)
+vowels_test.append(oo_test)
+vowels_test.append(uh_test)
+vowels_test.append(uw_test)
+
 vowels_test = [ae_test,ah_test,aw_test,eh_test,er_test,ei_test,ih_test,iy_test,oa_test,oo_test,uh_test,uw_test]
 
 #ae_mean = ae.mean(axis=0)
@@ -131,10 +158,13 @@ for i in range (0,12):
     rv_train = multivariate_normal(mean=mean(m_train),cov=cov(m_train))
     rv_test = multivariate_normal(mean=mean(m_test),cov=cov(m_test))
     probabilities_train.append(rv_train.pdf(m_train))
-    probabilities_test.append(rv_train.pdf(m_test))
+    probabilities_test.append(rv_test.pdf(m_test))
 
 predicted_train = np.argmax(probabilities_train, axis=0)
 predicted_test = np.argmax(probabilities_test, axis=0)
+
+correct_train = np.asarray([i for i in range(12) for _ in range(70)])
+correct_test = np.asarray([i for i in range(12) for _ in range(69)])
 
 #print("f: ")
 #print(cov_ae[1])
@@ -155,7 +185,14 @@ print("   ")
 print("predicted train length: ",len(predicted_train))
 print("  ")
 print("predicted test length: ",len(predicted_test))
-
+print("   ")
+print("correct train: ",correct_train)
+print("  ")
+print("correct test: ",correct_test)
+print("   ")
+print("correct train length: ",len(correct_train))
+print("  ")
+print("correct test length: ",len(correct_test))
 
 
 #print(mean)
