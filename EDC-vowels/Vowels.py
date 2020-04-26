@@ -38,61 +38,7 @@ oo = data[9 * N_all:10 * N_all, :]
 uh = data[10 * N_all:11 * N_all, :]
 uw = data[11 * N_all:12 * N_all, :]
 
-ae_training = data[:N_train, :]
-ae_test = data[N_train:N_all, :]
-ah_training = data[N_all:N_all + N_train, :]
-ah_test = data[N_all + N_train:2 * N_all, :]
-aw_training = data[2 * N_all:2 * N_all + N_train, :]
-aw_test = data[2 * N_all + N_train:3 * N_all, :]
-eh_training = data[3 * N_all:3 * N_all + N_train, :]
-eh_test = data[3 * N_all + N_train:4 * N_all, :]
-er_training = data[4 * N_all:4 * N_all + N_train, :]
-er_test = data[4 * N_all + N_train:5 * N_all, :]
-ei_training = data[5 * N_all:5 * N_all + N_train, :]
-ei_test = data[5 * N_all + N_train:6 * N_all, :]
-ih_training = data[6 * N_all:6 * N_all + N_train, :]
-ih_test = data[6 * N_all + N_train:7 * N_all, :]
-iy_training = data[7 * N_all:7 * N_all + N_train, :]
-iy_test = data[7 * N_all + N_train:8 * N_all, :]
-oa_training = data[8 * N_all:8 * N_all + N_train, :]
-oa_test = data[8 * N_all + N_train:9 * N_all, :]
-oo_training = data[9 * N_all:9 * N_all + N_train, :]
-oo_test = data[9 * N_all + N_train:10 * N_all, :]
-uh_training = data[10 * N_all:10 * N_all + N_train, :]
-uh_test = data[10 * N_all + N_train:11 * N_all, :]
-uw_training = data[11 * N_all:11 * N_all + N_train, :]
-uw_test = data[11 * N_all + N_train:12 * N_all, :]
 
-vowels_train = dict()
-vowels_train[0]=ae_training
-vowels_train[1]=ah_training
-vowels_train[2]=aw_training
-vowels_train[3]=eh_training
-vowels_train[4]=er_training
-vowels_train[5]=ei_training
-vowels_train[6]=ih_training
-vowels_train[7]=iy_training
-vowels_train[8]=oa_training
-vowels_train[9]=oo_training
-vowels_train[10]=uh_training
-vowels_train[11]=uw_training
-
-vowels_test = []
-vowels_test.extend(ae_test)
-vowels_test.extend(ah_test)
-vowels_test.extend(aw_test)
-vowels_test.extend(eh_test)
-vowels_test.extend(er_test)
-vowels_test.extend(ei_test)
-vowels_test.extend(ih_test)
-vowels_test.extend(iy_test)
-vowels_test.extend(oa_test)
-vowels_test.extend(oo_test)
-vowels_test.extend(uh_test)
-vowels_test.extend(uw_test)
-
-vowels_test = [ae_test, ah_test, aw_test, eh_test, er_test, ei_test, ih_test, iy_test, oa_test, oo_test, uh_test,
-               uw_test]
 
 
 def cov_matrix(m):
@@ -134,12 +80,8 @@ def gaussian_density(x,m):
 
 
 
-#predict = []
-#for vowel in vowels.enumarate:
- #   for i in range(1,70):
-  #      g=gaussian_density(vowel[i],vowel)
-   #     m=argmax(g)
-    #    predict[i]=g
+
+
 
 
 
@@ -155,17 +97,6 @@ correct_test = np.asarray([i for i in range(12) for _ in range(69)])
 g = gaussian_density(ae[67], ae)
 y = multivariate_normal.pdf(ae, mean(ae), cov(ae))
 
-
-g=gaussian_density(oa[50],oa)
-b=gaussian_density(oa[50],data)
-
-print("ae: ",g)
-print("argmax ae:   ",np.argmax(g,axis=0))
-
-print("   ")
-print("data    : ",g)
-print("argmax data   : ",np.argmax(b,axis=0))
-#print(cov(ae))
 
 
 
@@ -204,6 +135,22 @@ distributions[11]=multivariate_normal(mean(uw),cov(uw))
 
 print("distributions:    ",distributions)
 
+vowel_probabilities_train = np.zeros((len(vowels), len(train_set)))
+
+vowel_probabilities_train[0] = distributions[0].pdf(train_set)
+vowel_probabilities_train[1] = distributions[1].pdf(train_set)
+vowel_probabilities_train[2] = distributions[2].pdf(train_set)
+vowel_probabilities_train[3] = distributions[3].pdf(train_set)
+vowel_probabilities_train[4] = distributions[4].pdf(train_set)
+vowel_probabilities_train[5] = distributions[5].pdf(train_set)
+vowel_probabilities_train[6] = distributions[6].pdf(train_set)
+vowel_probabilities_train[7] = distributions[7].pdf(train_set)
+vowel_probabilities_train[8] = distributions[8].pdf(train_set)
+vowel_probabilities_train[9] = distributions[9].pdf(train_set)
+vowel_probabilities_train[10] = distributions[10].pdf(train_set)
+vowel_probabilities_train[11] = distributions[11].pdf(train_set)
+
+
 vowel_probabilities_test = np.zeros((len(vowels), len(test_set)))
 
 vowel_probabilities_test[0] = distributions[0].pdf(test_set)
@@ -220,14 +167,19 @@ vowel_probabilities_test[10] = distributions[10].pdf(test_set)
 vowel_probabilities_test[11] = distributions[11].pdf(test_set)
 
 
+print("vowel_probabilities_train:    ",vowel_probabilities_train)
+
+predicted_vowel_indices_train = np.argmax(vowel_probabilities_train, axis=0)
+
+print("predicted train:   ",predicted_vowel_indices_train)
+
 
 
 print("vowel_probabilities_test:    ",vowel_probabilities_test)
 
 predicted_vowel_indices_test = np.argmax(vowel_probabilities_test, axis=0)
 
-print("predicted:   ",predicted_vowel_indices_test)
+print("predicted test:   ",predicted_vowel_indices_test)
 
 
-print(len(test_set))
-print(len(train_set))
+#print(correct_train)
