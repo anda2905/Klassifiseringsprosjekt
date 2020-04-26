@@ -93,31 +93,7 @@ vowels_test.append(uw_test)
 
 vowels_test = [ae_test,ah_test,aw_test,eh_test,er_test,ei_test,ih_test,iy_test,oa_test,oo_test,uh_test,uw_test]
 
-#ae_mean = ae.mean(axis=0)
-#ah_mean = ah.mean(axis=0)
-#aw_mean = aw.mean(axis=0)
-#eh_mean = eh.mean(axis=0)
-#er_mean = er.mean(axis=0)
-#ei_mean = ei.mean(axis=0)
-#ih_mean = ih.mean(axis=0)
-#iy_mean = iy.mean(axis=0)
-#oa_mean = oa.mean(axis=0)
-#oo_mean = oo.mean(axis=0)
-#uh_mean = uh.mean(axis=0)
-#uw_mean = uw.mean(axis=0)
 
-#print("ae mean:", ae_mean)
-#print("ah mean:", ah_mean)
-#print("aw mean:", aw_mean)
-#print("eh mean:", eh_mean)
-#print("er mean:", er_mean)
-#print("ei mean:", ei_mean)
-#print("ih mean:", ih_mean)
-#print("iy mean:", iy_mean)
-#print("oa mean:", oa_mean)
-#print("oo mean:", oo_mean)
-#print("uh mean:", uh_mean)
-#print("uw mean:", uw_mean)
 
 def cov_matrix(m):
     return np.cov(m.T)
@@ -143,60 +119,35 @@ def cov(m):
     c = np.dot((m - m.mean(axis=0)).T, (m - m.mean(axis=0))) / (len(m) - 1)
     return c
 
-#print("covae2:",cov(ae))
 
-sample_mean = []
-covarianse = []
-probabilities_train = []
-probabilities_test = []
+def gaussian_density(x,mu,sigma):
+    a=np.exp((-1/2)*(x-mu).T*np.linalg.inv(sigma) * (x - mu))
+    b=((2*np.pi**len(x)*np.linalg.det(sigma**(1)))**(1/2))
 
-for i in range (0,12):
-    m_train = vowels_train[i]
-    m_test = vowels_test[i]
-    sample_mean.append(mean(m_train))
-    covarianse.append(cov(m_train))
-    rv_train = multivariate_normal(mean=mean(m_train),cov=cov(m_train))
-    rv_test = multivariate_normal(mean=mean(m_test),cov=cov(m_test))
-    probabilities_train.append(rv_train.pdf(m_train))
-    probabilities_test.append(rv_test.pdf(m_test))
+    g_density=a/b
+    return g_density
 
-predicted_train = np.argmax(probabilities_train, axis=0)
-predicted_test = np.argmax(probabilities_test, axis=0)
+
+
+
+
+
+
+
+
 
 correct_train = np.asarray([i for i in range(12) for _ in range(70)])
 correct_test = np.asarray([i for i in range(12) for _ in range(69)])
 
-#print("f: ")
-#print(cov_ae[1])
 
 
-print("probabilties training: ",probabilities_train)
-print("  ")
-print("probabilities test: ",probabilities_test)
-print("   ")
-print("probabilties training sixe: ",len(probabilities_train))
-print("  ")
-print("probabilities test size: ",len(probabilities_test))
-print("   ")
-print("predicted train: ",predicted_train)
-print("  ")
-print("predicted test: ",predicted_test)
-print("   ")
-print("predicted train length: ",len(predicted_train))
-print("  ")
-print("predicted test length: ",len(predicted_test))
-print("   ")
-print("correct train: ",correct_train)
-print("  ")
-print("correct test: ",correct_test)
-print("   ")
-print("correct train length: ",len(correct_train))
-print("  ")
-print("correct test length: ",len(correct_test))
+g=gaussian_density(ae[0],mean(ae),cov(ae))
+
+print("dobbelsjekk: ",g)
 
 
-#print(mean)
-#print(covarianse)
+
+print(cov(ae))
 
 
 
