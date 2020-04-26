@@ -120,7 +120,9 @@ def cov(m):
     return c
 
 
-def gaussian_density(x,mu,sigma):
+def gaussian_density(x,m):
+    mu=mean(m)
+    sigma=cov(m)
     a=np.exp((-1/2)*(x-mu).T*np.linalg.inv(sigma) * (x - mu))
     b=((2*np.pi**len(x)*np.linalg.det(sigma**(1)))**(1/2))
 
@@ -141,7 +143,7 @@ correct_test = np.asarray([i for i in range(12) for _ in range(69)])
 
 
 
-g=gaussian_density(ae[0],mean(ae),cov(ae))
+g=gaussian_density(ae[0],ae)
 
 print("dobbelsjekk: ",g)
 
