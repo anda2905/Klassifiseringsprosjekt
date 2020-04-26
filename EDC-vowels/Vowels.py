@@ -167,19 +167,47 @@ vowel_probabilities_test[10] = distributions[10].pdf(test_set)
 vowel_probabilities_test[11] = distributions[11].pdf(test_set)
 
 
-print("vowel_probabilities_train:    ",vowel_probabilities_train)
+#print("vowel_probabilities_train:    ",vowel_probabilities_train)
 
 predicted_vowel_indices_train = np.argmax(vowel_probabilities_train, axis=0)
 
-print("predicted train:   ",predicted_vowel_indices_train)
+#print("predicted train:   ",predicted_vowel_indices_train)
 
 
 
-print("vowel_probabilities_test:    ",vowel_probabilities_test)
+
+
+#print("vowel_probabilities_test:    ",vowel_probabilities_test)
 
 predicted_vowel_indices_test = np.argmax(vowel_probabilities_test, axis=0)
 
-print("predicted test:   ",predicted_vowel_indices_test)
+#print("predicted test:   ",predicted_vowel_indices_test)
 
+def error_rate(N, m):
+    e = 0
+    n = 0
+    for i in m:
+        e += i[0] + i[1] + i[2] + i[3] + i[4] + i[5] + i[6] + i[7] + i[8] + i[9] + i[10] + i[11] - i[n]
+        n += 1
+    print("#feil:", e)
+    return e / N*100
 
 #print(correct_train)
+conf_train = np.zeros((12, 12))
+# confusion matrix for the train set
+for i, j in zip(predicted_vowel_indices_train, correct_train):
+    conf_train[i, j] += 1
+print('train confusion:\n', conf_train)
+
+
+print("train feil: ", error_rate(N_train*12, conf_train),"%")
+print("  ")
+
+conf_test = np.zeros((12, 12))
+# confusion matrix for the train set
+for i, j in zip(predicted_vowel_indices_test, correct_test):
+    conf_test[i, j] += 1
+print('test confusion:\n', conf_test)
+
+
+print("test feil: ", error_rate(N_test*12, conf_test),"%")
