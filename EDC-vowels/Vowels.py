@@ -39,32 +39,16 @@ uh = data[10 * N_all:11 * N_all, :]
 uw = data[11 * N_all:12 * N_all, :]
 
 
-
-
-def cov_matrix(m):
-    return np.cov(m.T)
-
-
-# print("covariance matrix for ae:\n", cov_matrix(ae))
-# print("covariance matrix for ah:\n", cov_matrix(ah))
-# print("covariance matrix for aw:\n", cov_matrix(aw))
-# print("covariance matrix for eh:\n", cov_matrix(eh))
-# print("covariance matrix for er:\n", cov_matrix(er))
-# print("covariance matrix for ei:\n", cov_matrix(ei))
-# print("covariance matrix for ih:\n", cov_matrix(ih))
-# print("covariance matrix for iy:\n", cov_matrix(iy))
-# print("covariance matrix for oa:\n", cov_matrix(oa))
-# print("covariance matrix for oo:\n", cov_matrix(oo))
-# print("covariance matrix for uh:\n", cov_matrix(uh))
-# print("covariance matrix for uw:\n", cov_matrix(uw))
-
 def mean(m):
     mean = m.mean(axis=0)
     return mean
 
 
 def cov(m):
+    d = True
     c = np.dot((m - m.mean(axis=0)).T, (m - m.mean(axis=0))) / (len(m) - 1)
+    if d == True:
+        c = np.diag(np.diag(c))
     return c
 
 
