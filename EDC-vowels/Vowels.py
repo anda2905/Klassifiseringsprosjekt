@@ -1,6 +1,6 @@
 import numpy as np
 import matplotlib.pyplot as plt
-
+from sklearn.mixture import GaussianMixture as GMM
 from scipy.stats import multivariate_normal
 
 data = np.genfromtxt('vowdata_nohead.dat', dtype='U16')
@@ -61,20 +61,6 @@ def gaussian_density(x,m):
     g_density = a / b
     return g_density
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 correct_train = np.asarray([i for i in range(12) for _ in range(70)])
 correct_test = np.asarray([i for i in range(12) for _ in range(69)])
 
@@ -82,17 +68,8 @@ g = gaussian_density(ae[67], ae)
 y = multivariate_normal.pdf(ae, mean(ae), cov(ae))
 
 
-
-
 print("mean data  ",mean(data))
 print("cov data   ",cov(data))
-
-#print("mean ae  ",mean(ae))
-#print("cov ae   ",cov(ae))
-
-#print("mean data  ",mean(data))
-#print("cov data   ",cov(data))
-
 
 print("  ")
 
@@ -151,28 +128,17 @@ vowel_probabilities_test[10] = distributions[10].pdf(test_set)
 vowel_probabilities_test[11] = distributions[11].pdf(test_set)
 
 
-#print("vowel_probabilities_train:    ",vowel_probabilities_train)
 
 predicted_vowel_indices_train = np.argmax(vowel_probabilities_train, axis=0)
 
-#print("predicted train:   ",predicted_vowel_indices_train)
-
-
-
-
-
-#print("vowel_probabilities_test:    ",vowel_probabilities_test)
-
 predicted_vowel_indices_test = np.argmax(vowel_probabilities_test, axis=0)
 
-#print("predicted test:   ",predicted_vowel_indices_test)
 
 def error_rate(N, m):
     e = np.sum(m) - np.trace(m)
     print("#feil:", e)
     return e / N*100
 
-#print(correct_train)
 conf_train = np.zeros((12, 12))
 # confusion matrix for the train set
 for i, j in zip(predicted_vowel_indices_train, correct_train):
