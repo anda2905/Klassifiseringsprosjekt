@@ -184,11 +184,7 @@ predicted_vowel_indices_test = np.argmax(vowel_probabilities_test, axis=0)
 #print("predicted test:   ",predicted_vowel_indices_test)
 
 def error_rate(N, m):
-    e = 0
-    n = 0
-    for i in m:
-        e += i[0] + i[1] + i[2] + i[3] + i[4] + i[5] + i[6] + i[7] + i[8] + i[9] + i[10] + i[11] - i[n]
-        n += 1
+    e = np.sum(m) - np.trace(m)
     print("#feil:", e)
     return e / N*100
 
