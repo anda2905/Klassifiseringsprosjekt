@@ -7,6 +7,7 @@ data = np.genfromtxt('vowdata_nohead.dat', dtype='U16')
 identifiers = data[:, 0]
 data = data[:, 2:7].astype(np.int)
 
+
 vowels = ['ae', 'ah', 'aw', 'eh', 'er', 'ei', 'ih', 'iy', 'oa', 'oo', 'uh', 'uw']
 
 
@@ -63,33 +64,33 @@ uh_test=data[10*N_all + N_train:11*N_all,:]
 uw_training=data[11*N_all:11*N_all + N_train, :]
 uw_test=data[11*N_all + N_train:12*N_all,:]
 
-vowels_train = []
-vowels_train.append(ae_training)
-vowels_train.append(ah_training)
-vowels_train.append(aw_training)
-vowels_train.append(eh_training)
-vowels_train.append(er_training)
-vowels_train.append(ei_training)
-vowels_train.append(ih_training)
-vowels_train.append(iy_training)
-vowels_train.append(oa_training)
-vowels_train.append(oo_training)
-vowels_train.append(uh_training)
-vowels_train.append(uw_training)
+vowels_train = dict()
+vowels_train[0]=ae_training
+vowels_train[1]=ah_training
+vowels_train[2]=aw_training
+vowels_train[3]=eh_training
+vowels_train[4]=er_training
+vowels_train[5]=ei_training
+vowels_train[6]=ih_training
+vowels_train[7]=iy_training
+vowels_train[8]=oa_training
+vowels_train[9]=oo_training
+vowels_train[10]=uh_training
+vowels_train[11]=uw_training
 
 vowels_test = []
-vowels_test.append(ae_test)
-vowels_test.append(ah_test)
-vowels_test.append(aw_test)
-vowels_test.append(eh_test)
-vowels_test.append(er_test)
-vowels_test.append(ei_test)
-vowels_test.append(ih_test)
-vowels_test.append(iy_test)
-vowels_test.append(oa_test)
-vowels_test.append(oo_test)
-vowels_test.append(uh_test)
-vowels_test.append(uw_test)
+vowels_test.extend(ae_test)
+vowels_test.extend(ah_test)
+vowels_test.extend(aw_test)
+vowels_test.extend(eh_test)
+vowels_test.extend(er_test)
+vowels_test.extend(ei_test)
+vowels_test.extend(ih_test)
+vowels_test.extend(iy_test)
+vowels_test.extend(oa_test)
+vowels_test.extend(oo_test)
+vowels_test.extend(uh_test)
+vowels_test.extend(uw_test)
 
 vowels_test = [ae_test,ah_test,aw_test,eh_test,er_test,ei_test,ih_test,iy_test,oa_test,oo_test,uh_test,uw_test]
 
@@ -132,6 +133,15 @@ def gaussian_density(x,m):
 
 
 
+#predict = []
+#for vowel in vowels.enumarate:
+ #   for i in range(1,70):
+  #      g=gaussian_density(vowel[i],vowel)
+   #     m=argmax(g)
+    #    predict[i]=g
+
+
+
 
 
 
@@ -143,14 +153,78 @@ correct_test = np.asarray([i for i in range(12) for _ in range(69)])
 
 
 
-g=gaussian_density(ae[0],ae)
+g=gaussian_density(oa[50],oa)
+b=gaussian_density(oa[50],data)
 
-print("dobbelsjekk: ",g)
+print("ae: ",g)
+print("argmax ae:   ",np.argmax(g,axis=0))
+
+print("   ")
+print("data    : ",g)
+print("argmax data   : ",np.argmax(b,axis=0))
+#print(cov(ae))
 
 
 
-print(cov(ae))
+print("mean data  ",mean(data))
+print("cov data   ",cov(data))
+
+#print("mean ae  ",mean(ae))
+#print("cov ae   ",cov(ae))
+
+#print("mean data  ",mean(data))
+#print("cov data   ",cov(data))
+
+
+print("  ")
+
+#print(class_probabilities)
+
+#rv = multivariate_normal(ae,mean(ae), cov(ae))
+
+
+#print(rv.pdf(test_set))
+distributions = dict()
+
+distributions[0]=multivariate_normal(mean(ae),cov(ae))
+distributions[1]=multivariate_normal(mean(ah),cov(ah))
+distributions[2]=multivariate_normal(mean(aw),cov(aw))
+distributions[3]=multivariate_normal(mean(eh),cov(eh))
+distributions[4]=multivariate_normal(mean(er),cov(er))
+distributions[5]=multivariate_normal(mean(ei),cov(ei))
+distributions[6]=multivariate_normal(mean(ih),cov(ih))
+distributions[7]=multivariate_normal(mean(iy),cov(iy))
+distributions[8]=multivariate_normal(mean(oa),cov(oa))
+distributions[9]=multivariate_normal(mean(oo),cov(oo))
+distributions[10]=multivariate_normal(mean(uh),cov(uh))
+distributions[11]=multivariate_normal(mean(uw),cov(uw))
+
+print("distributions:    ",distributions)
+
+vowel_probabilities_test = np.zeros((len(vowels), len(test_set)))
+
+vowel_probabilities_test[0] = distributions[0].pdf(test_set)
+vowel_probabilities_test[1] = distributions[1].pdf(test_set)
+vowel_probabilities_test[2] = distributions[2].pdf(test_set)
+vowel_probabilities_test[3] = distributions[3].pdf(test_set)
+vowel_probabilities_test[4] = distributions[4].pdf(test_set)
+vowel_probabilities_test[5] = distributions[5].pdf(test_set)
+vowel_probabilities_test[6] = distributions[6].pdf(test_set)
+vowel_probabilities_test[7] = distributions[7].pdf(test_set)
+vowel_probabilities_test[8] = distributions[8].pdf(test_set)
+vowel_probabilities_test[9] = distributions[9].pdf(test_set)
+vowel_probabilities_test[10] = distributions[10].pdf(test_set)
+vowel_probabilities_test[11] = distributions[11].pdf(test_set)
 
 
 
 
+print("vowel_probabilities_test:    ",vowel_probabilities_test)
+
+predicted_vowel_indices_test = np.argmax(vowel_probabilities_test, axis=0)
+
+print("predicted:   ",predicted_vowel_indices_test)
+
+
+print(len(test_set))
+print(len(train_set))
