@@ -134,20 +134,22 @@ def gaussian_density(x,m):
 correct_train = np.asarray([i for i in range(12) for _ in range(70)])
 correct_test = np.asarray([i for i in range(12) for _ in range(69)])
 
-g = gaussian_density(ae[0], data)
-y = multivariate_normal.pdf(ae[0],mean(ae), cov(ae))
+g = gaussian_density(ae[67], ae)
+y = multivariate_normal.pdf(ae, mean(ae), cov(ae))
+
 
 print("dobbelsjekk: ", g)
 print("med den andre: ", y)
-print("p:", np.max(y))
+print("p:", np.argmax(g,axis=0)*1/12)
+print("y:", np.argmax(g,axis=0))
 
-g=gaussian_density(ae[0],ae)
+g=gaussian_density(ae[0],uw)
 
-print("dobbelsjekk: ",g)
+print(len(data))
 
 
 
-print(cov(ae))
+#print(cov(ae))
 
 
 
