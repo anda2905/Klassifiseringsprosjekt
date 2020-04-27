@@ -154,6 +154,10 @@ conf_test = np.zeros((12, 12))
 for i, j in zip(predicted_vowel_indices_test, correct_test):
     conf_test[i, j] += 1
 print('test confusion:\n', conf_test)
-
-
 print("test feil: ", error_rate(N_test*12, conf_test),"%")
+
+
+g = GMM()
+g.fit(X=train_set)
+print(g.predict(test_set[:,:]))
+print("train set:", train_set)
