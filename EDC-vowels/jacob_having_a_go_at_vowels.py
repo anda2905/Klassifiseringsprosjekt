@@ -98,7 +98,7 @@ confuse(predicted_vowel_indices_test, correct_test, 'diag covar')
 
 distributions = dict()
 for v in vowels:
-	gmm = GMM(2, 'diag') # 2 mixtures, cov-type diag
+	gmm = GMM(2, 'diag') # 2 mixtures, cov-type diagonal
 	gmm.fit(data_dict[v])
 	distributions[v] = gmm.score_samples
 
