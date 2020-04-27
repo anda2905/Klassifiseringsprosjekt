@@ -8,6 +8,7 @@ identifiers = data[:, 0]
 data = data[:, 2:7].astype(np.int)  # pulls out 'steady state' values for the vowels
 
 
+
 vowels = ['ae', 'ah', 'aw', 'eh', 'er', 'ei', 'ih', 'iy', 'oa', 'oo', 'uh', 'uw']
 
 N_train = 70
@@ -24,6 +25,7 @@ for vowel in vowels:
 
 train_set = data[train_index]
 test_set = data[test_index]
+y_train = identifiers[train_index]
 
 ae = data[:N_all, :]
 ah = data[N_all:2 * N_all, :]
