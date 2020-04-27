@@ -6,7 +6,7 @@ from scipy.stats import multivariate_normal
 # loads data
 data = np.genfromtxt('vowdata_nohead.dat', dtype='U16')
 identifiers = data[:, 0]
-data = data[:, 2:7].astype(np.int)  # pulls out 'steady state' values for the vowels
+data = data[:, 2:5].astype(np.int)  # pulls out 'steady state' values for the vowels
 
 vowels = ['ae', 'ah', 'aw', 'eh', 'er', 'ei', 'ih', 'iy', 'oa', 'oo', 'uh', 'uw']
 
@@ -25,13 +25,16 @@ for vowel in vowels:
 
 train_set = data[train_index]
 test_set = data[test_index]
-y_train = identifiers[train_index]
+
 
 # put data into dictionary and creates answersheats
 data_dict = dict()
+data_dict_train = dict()
 
 for i in range(12):
     data_dict[vowels[i]] = data[i * N_all:(i + 1) * N_all, :]
+    data_dict_train[vowels[i]] = data[i * N_all: i * N_all + N_train, :]
+
 
 correct_train = np.asarray([i for i in range(12) for _ in range(N_train)])
 correct_test = np.asarray([i for i in range(12) for _ in range(N_test)])
@@ -82,7 +85,7 @@ def confuse(pred, corr, label=''):
 # train
 distributions = dict()
 for v in vowels:
-    distributions[v] = multivariate_normal(mean(data_dict[v]), cov(data_dict[v], diagonal=False)).pdf
+    distributions[v] = multivariate_normal(mean(data_dict_train[v]), cov(data_dict_train[v], diagonal=False)).pdf
 
 # predict
 predicted_vowel_indices_test = predict(distributions, test_set)
@@ -92,7 +95,7 @@ confuse(predicted_vowel_indices_test, correct_test, 'full covar')
 
 distributions = dict()
 for v in vowels:
-    distributions[v] = multivariate_normal(mean(data_dict[v]), cov(data_dict[v], diagonal=True)).pdf
+    distributions[v] = multivariate_normal(mean(data_dict_train[v]), cov(data_dict_train[v], diagonal=True)).pdf
 
 predicted_vowel_indices_test = predict(distributions, test_set)
 confuse(predicted_vowel_indices_test, correct_test, 'diag covar')
@@ -102,7 +105,7 @@ confuse(predicted_vowel_indices_test, correct_test, 'diag covar')
 distributions = dict()
 for v in vowels:
     gmm = GMM(2, 'diag')  # 2 mixtures, cov-type diagonal
-    gmm.fit(data_dict[v])
+    gmm.fit(data_dict_train[v])
     distributions[v] = gmm.score_samples
 
 pred = predict(distributions, test_set)
@@ -113,7 +116,7 @@ confuse(pred, correct_test, 'GMM2')
 distributions = dict()
 for v in vowels:
     gmm = GMM(3, 'full')  # 3 mixtures, cov-type diag
-    gmm.fit(data_dict[v])
+    gmm.fit(data_dict_train[v])
     distributions[v] = gmm.score_samples
 
 pred = predict(distributions, train_set)
