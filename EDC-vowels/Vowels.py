@@ -123,13 +123,42 @@ for v in vowels:
 
 
 pred_train = predict(distributions, train_set)
-confuse(pred_train, correct_train, 'GMM2 train set')
+confuse(pred_train, correct_train, 'GMM2 diagonal covariance train set')
 
 pred_test = predict(distributions, test_set)
-confuse(pred_test, correct_test, 'GMM2 test set')
+confuse(pred_test, correct_test, 'GMM2 diagonal covariance test set')
+
+print("\ntwo gaussians full covariance:\n")
+distributions = dict()
+for v in vowels:
+    gmm = GMM(2, 'full')  # 2 mixtures, cov-type diagonal
+    gmm.fit(data_dict_train[v]) #training with the training data
+    distributions[v] = gmm.score_samples
+
+
+pred_train = predict(distributions, train_set)
+confuse(pred_train, correct_train, 'GMM2 full covariance train set')
+
+pred_test = predict(distributions, test_set)
+confuse(pred_test, correct_test, 'GMM2 full covariance test set')
+
 
 # GMM3
 print("\nthree gaussians diagonal:\n")
+distributions = dict()
+for v in vowels:
+    gmm = GMM(3, 'diag')  # 3 mixtures, cov-type diag
+    gmm.fit(data_dict_train[v]) #training with the training data
+    distributions[v] = gmm.score_samples
+
+
+pred_train = predict(distributions, train_set)
+confuse(pred_train, correct_train, 'GMM3 diagonal covariance train set')
+
+pred_test = predict(distributions, test_set)
+confuse(pred_test, correct_test, 'GMM3 diagonal covariance test set')
+
+print("\nthree gaussians full covariance:\n")
 distributions = dict()
 for v in vowels:
     gmm = GMM(3, 'full')  # 3 mixtures, cov-type diag
@@ -138,8 +167,8 @@ for v in vowels:
 
 
 pred_train = predict(distributions, train_set)
-confuse(pred_train, correct_train, 'GMM3 train set')
+confuse(pred_train, correct_train, 'GMM3 full covariance train set')
 
 pred_test = predict(distributions, test_set)
-confuse(pred_test, correct_test, 'GMM3 test set')
+confuse(pred_test, correct_test, 'GMM3 full covariance test set')
 
