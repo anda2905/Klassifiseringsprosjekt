@@ -172,3 +172,42 @@ confuse(pred_train, correct_train, 'GMM3 full covariance train set')
 pred_test = predict(distributions, test_set)
 confuse(pred_test, correct_test, 'GMM3 full covariance test set')
 
+i=3
+
+plt.plot(data[0: N_all, :i],"ro")
+plt.plot(data[N_all: 2*N_all, :i], "bo")
+plt.plot(data[2*N_all: 3*N_all, :i], "go")
+plt.plot(data[3*N_all: 4*N_all, :i], "yo")
+plt.plot(data[4*N_all: 5*N_all, :i], "co")
+plt.plot(data[5*N_all: 6*N_all, :i], "mo")
+plt.plot(data[7*N_all: 8*N_all, :i], "C4o")
+plt.plot(data[8*N_all: 9*N_all, :i], "C5o")
+plt.plot(data[9*N_all: 10*N_all, :i], "C6o")
+plt.plot(data[10*N_all: 11*N_all, :i], "C7o")
+plt.plot(data[11*N_all: 12*N_all, :i], "C0o")
+
+
+
+if(i==1):
+    plt.vlines(70.5, 85, 350)
+    plt.xlabel("Formant F0 for all 12 classes. The black vertical line denotes the difference between the training and test set")
+
+if(i==2):
+    plt.vlines(70.5, 85, 1350)
+    plt.xlabel("Formant F1 for all 12 classes. The black vertical line denotes the difference between the training and test set")
+
+if(i==3):
+    plt.vlines(70.5, 0, 3500)
+    plt.xlabel("Formant F2 for all 12 classes. The black vertical line denotes the difference between the training and test set")
+
+plt.show()
+
+
+
+
+
+
+
+
+
+
