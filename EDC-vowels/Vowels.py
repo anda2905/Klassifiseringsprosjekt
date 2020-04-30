@@ -30,10 +30,12 @@ test_set = data[test_index]
 # put data into dictionary and creates answersheats
 data_dict = dict()
 data_dict_train = dict()
+data_dict_test = dict()
 
 for i in range(12):
     data_dict[vowels[i]] = data[i * N_all:(i + 1) * N_all, :]
     data_dict_train[vowels[i]] = data[i * N_all: i * N_all + N_train, :]
+    data_dict_test[vowels[i]] = data[i * N_all + N_train-1: (i+1) * N_all, :]
 
 
 correct_train = np.asarray([i for i in range(12) for _ in range(N_train)])
@@ -172,33 +174,54 @@ confuse(pred_train, correct_train, 'GMM3 full covariance train set')
 pred_test = predict(distributions, test_set)
 confuse(pred_test, correct_test, 'GMM3 full covariance test set')
 
-i=3
+i=2
 
-plt.plot(data[0: N_all, :i],"ro")
-plt.plot(data[N_all: 2*N_all, :i], "bo")
-plt.plot(data[2*N_all: 3*N_all, :i], "go")
-plt.plot(data[3*N_all: 4*N_all, :i], "yo")
-plt.plot(data[4*N_all: 5*N_all, :i], "co")
-plt.plot(data[5*N_all: 6*N_all, :i], "mo")
-plt.plot(data[7*N_all: 8*N_all, :i], "C4o")
-plt.plot(data[8*N_all: 9*N_all, :i], "C5o")
-plt.plot(data[9*N_all: 10*N_all, :i], "C6o")
-plt.plot(data[10*N_all: 11*N_all, :i], "C7o")
-plt.plot(data[11*N_all: 12*N_all, :i], "C0o")
+if(i<=3):
+    plt.plot(data[0: N_all, :i], "ro")
+    plt.plot(data[N_all: 2 * N_all, :i], "bo")
+    plt.plot(data[2 * N_all: 3 * N_all, :i], "go")
+    plt.plot(data[3 * N_all: 4 * N_all, :i], "yo")
+    plt.plot(data[4 * N_all: 5 * N_all, :i], "co")
+    plt.plot(data[5 * N_all: 6 * N_all, :i], "mo")
+    plt.plot(data[6 * N_all: 7 * N_all, :i], "ko")
+    plt.plot(data[7 * N_all: 8 * N_all, :i], "C4o")
+    plt.plot(data[8 * N_all: 9 * N_all, :i], "C5o")
+    plt.plot(data[9 * N_all: 10 * N_all, :i], "C6o")
+    plt.plot(data[10 * N_all: 11 * N_all, :i], "C7o")
+    plt.plot(data[11 * N_all: 12 * N_all, :i], "C0o")
 
+    if (i == 1):
+        plt.vlines(70.5, 85, 350)
+        plt.xlabel(
+            "Formant F0 for all 12 classes. The black vertical line denotes the difference between the training and test set")
+    if (i == 2):
+        plt.vlines(70.5, 85, 1350)
+        plt.xlabel(
+            "Formant F1 for all 12 classes. The black vertical line denotes the difference between the training and test set")
+    if (i == 3):
+        plt.vlines(70.5, 0, 3500)
+        plt.xlabel(
+            "Formant F2 for all 12 classes. The black vertical line denotes the difference between the training and test set")
+else:
+    x = []
+    for j in range(0, 3000):
+        x.append(j)
+    plt.plot(x, x, color='black', linestyle='dashed', linewidth=2)
+    plt.plot(mean(data_dict_test["ae"]), mean(data_dict_train["ae"]), "ro")
+    plt.plot(mean(data_dict_test["ah"]), mean(data_dict_train["ah"]), "bo")
+    plt.plot(mean(data_dict_test["aw"]), mean(data_dict_train["aw"]), "go")
+    plt.plot(mean(data_dict_test["eh"]), mean(data_dict_train["eh"]), "yo")
+    plt.plot(mean(data_dict_test["er"]), mean(data_dict_train["er"]), "co")
+    plt.plot(mean(data_dict_test["ei"]), mean(data_dict_train["ei"]), "mo")
+    plt.plot(mean(data_dict_test["ih"]), mean(data_dict_train["ih"]), "C4o")
+    plt.plot(mean(data_dict_test["iy"]), mean(data_dict_train["iy"]), "C5o")
+    plt.plot(mean(data_dict_test["oa"]), mean(data_dict_train["oa"]), "C6o")
+    plt.plot(mean(data_dict_test["oo"]), mean(data_dict_train["oo"]), "C7o")
+    plt.plot(mean(data_dict_test["uh"]), mean(data_dict_train["uh"]), "C0o")
+    plt.plot(mean(data_dict_test["uw"]), mean(data_dict_train["uw"]), "ko")
 
+    plt.xlabel("Mean of the test set vs mean of the training set.")
 
-if(i==1):
-    plt.vlines(70.5, 85, 350)
-    plt.xlabel("Formant F0 for all 12 classes. The black vertical line denotes the difference between the training and test set")
-
-if(i==2):
-    plt.vlines(70.5, 85, 1350)
-    plt.xlabel("Formant F1 for all 12 classes. The black vertical line denotes the difference between the training and test set")
-
-if(i==3):
-    plt.vlines(70.5, 0, 3500)
-    plt.xlabel("Formant F2 for all 12 classes. The black vertical line denotes the difference between the training and test set")
 
 plt.show()
 

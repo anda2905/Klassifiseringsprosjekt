@@ -11,7 +11,7 @@ class_3_all = np.loadtxt("class_3", float, delimiter=',')  # Iris-virginica
 N_all = 50
 N_train = 30
 N_test = N_all - N_train
-N_columns = 1
+N_columns = 4
 # Burde kanskje ha en for løkke på alpha slik at den tunes helt til all test dataen er riktig?
 alpha = 0.01  # step factor
 
@@ -23,6 +23,7 @@ t_k_train = np.concatenate((
 ),
     axis=1
 )
+
 
 # Correct answers for the test data
 t_k_test = np.concatenate((
@@ -67,9 +68,9 @@ def error_rate(N, m):
 
 # De forskjellige blomstenes karakteristikker
 attributes = np.array([
-    False,  # petal length
-    False,  # petal width
-    False,  # sepal length
+    True,  # petal length
+    True,  # petal width
+    True,  # sepal length
     True,  # sepal width
 ])
 
@@ -120,8 +121,7 @@ test_set = np.concatenate((test_set, np.ones((test_set.shape[0], 1))), axis=1).T
 # training
 
 maxiterations = 100000
-MSE_treshold = 0.1 * test_set.shape[
-    0]  # if data is perfectly classified MSE reaches 0. Unlikely that this treshold is met
+MSE_treshold = 0.1 * test_set.shape[0]  # if data is perfectly classified MSE reaches 0. Unlikely that this treshold is met
 dW_treshold = 0.02  # if dW is small it implies we are close to a local minimum (which is hopefully a global minimum)
 
 # gradient descent
@@ -159,6 +159,10 @@ answers_train = np.argmax(t_k_train, axis=0)
 
 conf_train = np.zeros((3, 3))
 # Confusion matrix for training data.
+
+
+
+
 for i, j in zip(predictions_train, answers_train):
     conf_train[i, j] += 1
 print('training confusion:\n', conf_train)
